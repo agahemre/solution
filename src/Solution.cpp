@@ -377,9 +377,9 @@ int Solution::detect_cycle(Node *head)
 		 * else continue the iteration
 		 */
 	}
-	// If we reaches this point then there is no cycle since list the loop terminates w/ NULL
+	// If we reaches this point then there is no cycle in the list since iteration already terminated with NULL
 
-	return -1;
+	return NOT_FOUND;
 }
 
 // This function checks whether linked list is palindrome or not given as a parameter
@@ -420,6 +420,53 @@ void Solution::push_r (Node *head, std::vector<int>& A)
 		A.push_back(head->key);
 	}
 	// base case i) do nothing
+}
+
+// This function implements the reversal algorithm for array rotation
+std::vector<int> Solution::rotate_rl(std::vector<int>& A, int k, DIRECTION d)
+{
+	// local data
+	int n = A.size();
+
+	if (n == 0) return A; // defensive check
+
+	// LEETCODE test update
+	k = k % n;
+
+	// this means direction CCW, left rotate by k
+	if (CCW == d)
+	{
+		// split the array properly
+		reverse (A, 0, k-1);
+		reverse (A, k, n-1);
+	}
+	// this means direction CW, right rotate by k
+	else
+	{
+		// split the array properly
+		reverse (A, 0, n-k-1);
+		reverse (A, n-k, n-1);
+	}
+
+	// reverse of reverse
+	return reverse (A, 0, n-1);
+}
+
+// This function reverses the given vector, i as started index and j as last index at the beginning
+std::vector<int> Solution::reverse(std::vector<int>& A, int i, int j)
+{
+	// WHILE I-TH index smaller than J-TH index, then
+	// SWAP the elements and move the indices towards each other
+	while (i < j)
+	{
+		swap(&A[i], &A[j]);
+
+		// Increment start index and decrement last index by 1 for each iteration
+		i++;
+		j--;
+	}
+
+	return A;
 }
 
 // This function searches the target in the given sorted array

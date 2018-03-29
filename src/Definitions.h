@@ -21,4 +21,7 @@ struct Node
 	Node *next;
 };
 
+// this enumeration defines a rotation direction
+typedef enum {CCW=1, CW=0} DIRECTION;
+
 #endif /* DEFINITIONS_H_ */

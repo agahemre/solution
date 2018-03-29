@@ -62,7 +62,6 @@ vector<const char *> construct_demo_vector_v2()
 
 int main()
 {
-
 	Solution solution;
 	vector<int> v = construct_demo_vector();
 	vector<const char *> v2 = construct_demo_vector_v2();
@@ -74,22 +73,21 @@ int main()
 	int index = solution.search(v, 0, sze-1, target);
 	char word[] = "1234567890"; // sample
 
-
 	// debug purpose
 	printf ("The target index -> %d\n", index);
 	printf ("The max value -> %d\n", solution.max(v, 0, sze-1) );
 	printf ("The max value (last & rest) -> %d\n", solution.max(v, sze) );
+	printf ("The reverse of the given array -> ");
 
 	// Shuffle vector before test
 	auto rng = std::default_random_engine {};
 	std::shuffle(v.begin(), v.end(), rng);
 
 	printf ("The k-th (%d) smallest value -> %d\n", k, solution.k_small(k, v, 0, sze-1) );
-    printf ("The k-th (%d) largest value -> %d\n", new_k, solution.k_largest(v, new_k) );
-    printf ("The maximum number of occurrence of word -> %d\n", solution.find_maximum_occurrence(v2) );
-
-    solution.print_pair_sum(v, sum);
-    printf ("Prints characters in reverse order -> "); solution.print_r (word);
+	printf ("The k-th (%d) largest value -> %d\n", new_k, solution.k_largest(v, new_k) );
+	printf ("The maximum number of occurrence of word -> %d\n", solution.find_maximum_occurrence(v2) );
+	solution.print_pair_sum(v, sum);
+	printf ("Prints characters in reverse order -> "); solution.print_r (word);
 
 	return SUCCESS;
 }

@@ -71,6 +71,8 @@ public:
 	int length(Node *, int);
 	Node* reverse (Node *);
 	Node* reverse (Node *, int, int); // LEETCODE
+	std::vector<int> reverse (std::vector<int>&, int, int);
+	std::vector<int> rotate_rl (std::vector<int>&, int, DIRECTION);
 	Node* rotate_r (Node *, int); // LEETCODE
 	Node* rotate_r_one (Node *); // LEETCODE
 	void print_r (Node *);
