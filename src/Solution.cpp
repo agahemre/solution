@@ -194,6 +194,37 @@ int Solution::length (Node* head)
 	// count from tail ... one by one, understand
 }
 
+// This function removes the N-TH node from the end of given a linked list and returns its head
+// Assumption : n will be valid
+Node* Solution::remove_nth_from_end (Node *head, int n)
+{
+	if (head == NULL) return head;
+
+	// local data
+	Node *current = head, *prev = NULL;
+	int l = length (head, 0);
+
+	// Find (LENGTH - N)-TH node from head
+	for (int j = 0; j < (l - n); j++)
+	{
+		prev = current;
+		current = current->next;
+	}
+
+	if (prev != NULL)
+		prev->next = current->next;
+	else
+	{
+		head = current->next; // move head to rest
+		current->next = NULL; // unlink between current and rest
+	}
+
+	delete current;
+	current = NULL;
+
+	return head;
+}
+
 /*
  * This function calculates the length of the given linked list by using tail recursion
  */

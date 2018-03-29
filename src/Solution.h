@@ -65,6 +65,7 @@ public:
 	// utility functions
 	void insert_node(Node2 *);
 	void delete_node(Node2 *, int);
+	Node* remove_nth_from_end (Node *, int); // LEETCODE
 	Node2* min(Node2 *);
 	Node2* max(Node2 *);
 	int length(Node *);
