@@ -138,7 +138,7 @@ Node2* Solution::search (Node2 *root, int key)
 	if (key > root->key)	// seek RIGHT subtree
 		return search (root->right, key);
 	else	// seek LEFT subtree
-		return search (root->right, key);
+		return search (root->left, key);
 }
 
 // This function searches the key provided as @param.
