@@ -4,6 +4,7 @@
  */
 
 #include <stack>
+#include <queue>
 #include <map>
 #include <unordered_map>
 #include "Solution.h"
@@ -12,6 +13,7 @@
 
 #define SUCCESS 8
 #define NOT_FOUND -1
+#define ONE 1
 
 /**
  * description : INORDER TREE WALK can be explained as first visit the left node,
@@ -19,31 +21,50 @@
  * go through the its root node
  * then, goto right node
  */
-// This function INORDER traversal in recursive way.
-void Solution::inorder_tree_walk(Node2 *root)
+// This function traverses a binary tree using INORDER
+void Solution::inorder_tree_walk (Node2 *root)
 {
-	inorder_tree_walk (root->left);
-	printf ("%d\t", root->key);
-	inorder_tree_walk (root->right);
+	if (root != NULL)
+	{
+		inorder_tree_walk (root->left);
+		printf ("%d\t", root->key);
+		inorder_tree_walk (root->right);
+	}
+	// base case i) 'do nothing'
 }
 
-// This function calculates the height of binary tree by using recursion
-int Solution::height(Node2 *root)
+/**
+ * description : LEVELORDER TREE WALK is a breadth first traversal for the tree
+ */
+// This function traverses a binary tree using LEVELORDER
+void Solution::levelorder_tree_walk (Node2 *root)
 {
-	// base case i)
-	if (root == NULL)
-		return 0;
+	// base case i) 'do nothing'
+	if (root == NULL) return;
 
-	int left_height = height (root->left);
-	int right_height = height (root->right);
+	// Use auxiliary data structure, in this case queue chosen
+	std::queue<Node2 *> q;
 
-	return 1 + std::max( right_height, left_height );
-}
+	q.push(root);
 
-// This function calculates height of the binary tree in iterative way
-int Solution::height_iterative(Node2 *root)
-{
-	// TODO
+	while (!q.empty())
+	{
+		Node2 *first = q.front();
+
+		// job done
+		printf ("%d\t", first->key);
+
+		// continue to iterate over
+		q.pop();
+
+		if (first->left != NULL)
+			q.push(first->left);
+
+		if (first->right != NULL)
+			q.push(first->right);
+	}
+
+	printf ("\n");
 }
 
 // This function constructs the binary tree at maximum possible height from vector
@@ -53,7 +74,7 @@ Node2* Solution::construct_maximum_binary_tree(const std::vector<int>& A)
 }
 
 // This function checks whether given binary tree is an actually binary search tree or not
-bool Solution::check_BST(Node2 *root)
+bool Solution::check_BST (Node2 *root)
 {
 	// base case i) called just after leaf node
 	if (root == NULL)	return true;
@@ -72,6 +93,40 @@ bool Solution::check_BST(Node2 *root)
 }
 
 /*
+ * rule : If the height of any nodes' RIGHT subtree differs from the height of the nodes' LEFT subtree by no more than ONE,
+ * then, it is a balanced BT
+ */
+// This function checks whether given binary tree is an actually balanced binary tree or not
+bool Solution::check_balanced (Node2 *root)
+{
+	// base case i)
+	if (root == NULL)	return true;
+
+	// base case ii)
+	if (root->right == NULL)
+	{
+		// check the height of LEFT subtree
+		int l = height (root->left);
+		return (l <= ONE);
+	}
+
+	// base case iii)
+	if (root->left == NULL)
+	{
+		// check the height of RIGHT subtree
+		int r = height (root->right);
+		return (r <= ONE);
+	}
+
+	// local data
+	int l = height (root->left);
+	int r = height (root->right);
+
+	// continue to check both LEFT and RIGHT subtrees
+	return ( check_balanced (root->left) && check_balanced (root->right) && (abs (l - r) <= ONE) );
+}
+
+/*
  * This function returns with the node containing the key, otherwise search miss (returning NULL)
  * Note: this function searches the key in given BST
  */
@@ -86,45 +141,35 @@ Node2* Solution::search (Node2 *root, int key)
 		return search (root->right, key);
 }
 
-/*
- * This function returns with the node containing the key, otherwise search miss (returning NULL)
- * Note: this function searches the key in given BT instead of BST
- */
-Node2* Solution::search (int key, Node2 *root)
-{
-	// base case i)
-	if ( (root == NULL) || (key == root->key)) return root;
-
-	// TODO
-}
-
 // This function searches the key provided as @param.
-// Assumption is root points the BST,
-Node2* Solution::iterative_tree_search	(Node2 *root, int key)
+// Assumption is root is a BST,
+Node2* Solution::iterative_tree_search (Node2 *root, int key)
 {
 	// local data
-	Node2 *curr = root;
+	Node2 *current = root;
 
-	while ( (curr != NULL) && (key != curr->key) )
+	while ( (current != NULL) && (key != current->key) )
 	{
 		// This is the rule set from definition of Binary Search Tree (BST)
-		if (key < curr->key) // seek from left subtree
-			curr = curr->left;
-		else // seek from right subtree
-			curr = curr->right;
+		if (key < current->key) // seek LEFT subtree
+			current = current->left;
+		else // seek RIGHT subtree
+			current = current->right;
 	}
 	// What if we construct binary tree instead of BST ?
+	// Check out exist function not using any auxiliary data structure
 
-	return curr; // either key found or current left as NULL
+	return current; // either key found or current left as NULL
 }
 // This function searches the key provided as @param.
-// Assumption is root points the Binary Tree, not just Binary Search Tree
-Node2* Solution::iterative_randomized_tree_search(Node2 *root, int key)
+// Assumption is root can be BT, which is a larger set of BST
+Node2* Solution::iterative_randomized_tree_search (Node2 *root, int key)
 {
-	// check base case
-	if (root != NULL)
+	// base case i)
+	if (root == NULL)
 		return NULL;
 
+	// Use auxiliary data structure, in this case stack chosen
 	std::stack<Node2 *> s1;
 	s1.push(root);
 
@@ -149,6 +194,7 @@ Node2* Solution::iterative_randomized_tree_search(Node2 *root, int key)
 		if (tp->right != NULL)
 			s1.push(tp->right);
 	}
+	// If the execution reaches this points, it is meant not to be found (key)
 
 	return NULL;
 }
@@ -177,6 +223,75 @@ Node2* Solution::max (Node2 *root)
 		root = root->right;
 
 	return root;
+}
+
+/**
+ * definition : the minimum depth is # of nodes along the shortest path from root down to the nearest leaf node
+ */
+// This function calculates the minimum depth of a binary tree in recursive way
+int Solution::min_depth (Node2 *root)
+{
+	// base case i)
+	if (root == NULL)
+		return 0;
+
+	// base case ii) leaf node
+	if (root->left == NULL && root->right == NULL)
+		return ONE;
+
+	// seek in RIGHT subtree
+	if (root->left == NULL)
+		return 1 + min_depth (root->right);
+
+	// seek in LEFT subtree
+	if (root->right == NULL)
+		return 1 + min_depth (root->left);
+
+	// local data
+	int depth_left = min_depth (root->left);
+	int depth_right = min_depth (root->right);
+
+	return 1 + std::min ( depth_right, depth_left );
+}
+
+/**
+ * definition : the height of a tree is # of nodes along the longest path from root to leaf
+ */
+// This function calculates the height of a binary tree using iteration
+int Solution::height_iterative(Node2 *root)
+{
+	// TODO
+}
+
+// This function calculates the height of a binary tree by using recursion
+int Solution::height(Node2 *root)
+{
+	// base case i)
+	if (root == NULL)
+		return 0;
+
+	int left_height = height (root->left);
+	int right_height = height (root->right);
+
+	return 1 + std::max( right_height, left_height );
+}
+
+// This function returns true when key be existed in a binary tree, otherwise returns false
+bool Solution::exist (Node2 *root, int key)
+{
+	// base case i)
+	if (root == NULL)
+		return false;
+
+	// base case ii)
+	if (key == root->key)
+		return true;
+
+	// local data
+	bool left = exist (root->left, key);
+	bool right = exist (root->right, key);
+
+	return (right || left);
 }
 
 // This function returns the length of linked list given as parameter,
@@ -390,7 +505,7 @@ Node* Solution::get_middle_node(Node *head)
 
 // This function detects whether cycle or not in the linked list given as parameter
 // pointed by HEAD
-int Solution::detect_cycle(Node *head)
+bool Solution::detect_cycle(Node *head)
 {
 	// construct similar logic as getting middle node of linked list
 	Node *first = head, *second = head;
@@ -402,7 +517,7 @@ int Solution::detect_cycle(Node *head)
 
 		// first and second points the same node, then cycle detected
 		if (first == second)
-			return SUCCESS;
+			return true;
 
 		/*
 		 * else continue the iteration
@@ -410,7 +525,7 @@ int Solution::detect_cycle(Node *head)
 	}
 	// If we reaches this point then there is no cycle in the list since iteration already terminated with NULL
 
-	return NOT_FOUND;
+	return false;
 }
 
 // This function checks whether linked list is palindrome or not given as a parameter

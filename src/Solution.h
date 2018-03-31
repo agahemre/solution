@@ -14,62 +14,36 @@ class Solution
 {
 public:
 
-	void inorder_tree_walk(Node2 *);
+	void inorder_tree_walk (Node2 *);
+	void levelorder_tree_walk (Node2 *);
 	Node2* search (Node2 *, int);
-	Node2* search (int, Node2 *);
-	Node2* iterative_tree_search(Node2 *, int);
-	Node2* iterative_randomized_tree_search(Node2 *, int);
-	Node2* successor(Node2 *);
-	Node2* predecessor(Node2 *);
+	Node2* iterative_tree_search (Node2 *, int);
+	Node2* iterative_randomized_tree_search (Node2 *, int);
+	Node2* successor (Node2 *);
+	Node2* predecessor (Node2 *);
 	Node2* construct_maximum_binary_tree(const std::vector<int>&); // LEETCODE
 	/**
 	 * lowest common ancestor
 	 */
 	Node2* lca (Node2 *);
-	Node* get_middle_node(Node *);
 	bool check_BST (Node2 *); // LEETCODE
-
-	int detect_cycle(Node *);
-	int check_palindrome(Node *);
-
-	/**
-	 * definition : the height of a tree is # of nodes on the longest path from root to leaf
-	 */
-	int height (Node2 *);
-	int height_iterative (Node2 *);
-
-	// prints list using recursion
-	inline void print_list(Node *head)
-	{
-		if (head != NULL) // # 1 times of check
-		{
-			printf("%d\t", head->key);
-			print_list(head->next); // # N time of call
-		}
-		else
-			printf("\n");
-	}
-
-	// return true if binary tree node exists key be looking for, otherwise return false
-	inline bool exist(Node2 *root, int key)
-	{
-		if (root == NULL)
-			return false;
-		else if (root->key == key)
-			return true;
-		else // continue to search
-			// key expected to be found either in left subtree or right subtree or maybe not found !
-			return exist(root->left, key) || exist(root->right, key);
-	}
+	bool check_balanced (Node2 *); // LEETCODE
+	Node* get_middle_node(Node *);
+	bool detect_cycle (Node *);
+	int check_palindrome (Node *);
 
 	// utility functions
-	void insert_node(Node2 *);
-	void delete_node(Node2 *, int);
+	void insert_node (Node2 *);
+	void delete_node (Node2 *, int);
 	Node* remove_nth_from_end (Node *, int); // LEETCODE
 	Node2* min(Node2 *);
 	Node2* max(Node2 *);
-	int length(Node *);
-	int length(Node *, int);
+	bool exist(Node2 *, int);
+	int height (Node2 *);
+	int height_iterative (Node2 *);
+	int min_depth (Node2 *); // LEETCODE
+	int length (Node *); // LEETCODE
+	int length (Node *, int);
 	Node* reverse (Node *);
 	Node* reverse (Node *, int, int); // LEETCODE
 	std::vector<int> reverse (std::vector<int>&, int, int);
