@@ -67,6 +67,37 @@ void Solution::levelorder_tree_walk (Node2 *root)
 	printf ("\n");
 }
 
+// This function removes the N-TH node from the end of given a linked list and returns its head
+// Assumption : n will be valid
+Node* Solution::remove_nth_from_end (Node *head, int n)
+{
+	if (head == NULL) return head;
+
+	// local data
+	Node *current = head, *prev = NULL;
+	int l = length (head, 0);
+
+	// Find (LENGTH - N)-TH node from head
+	for (int j = 0; j < (l - n); j++)
+	{
+		prev = current;
+		current = current->next;
+	}
+
+	if (prev != NULL)
+		prev->next = current->next;
+	else
+	{
+		head = current->next; // move head to rest
+		current->next = NULL; // unlink between current and rest
+	}
+
+	delete current;
+	current = NULL;
+
+	return head;
+}
+
 // This function constructs the binary tree at maximum possible height from vector
 Node2* Solution::construct_maximum_binary_tree(const std::vector<int>& A)
 {
@@ -258,13 +289,51 @@ int Solution::min_depth (Node2 *root)
  * definition : the height of a tree is # of nodes along the longest path from root to leaf
  */
 // This function calculates the height of a binary tree using iteration
-int Solution::height_iterative(Node2 *root)
+int Solution::height_iterative (Node2 *root)
 {
-	// TODO
+	// Note: use similar logic as in LEVELORDER TREE WALK
+
+	// base case i)
+	if (root == NULL) return 0;
+
+	// local data
+	int H = 0;
+
+	// Use auxiliary data structure, in this case queue chosen
+	std::queue<Node2 *> q;
+
+	q.push(root);
+
+	while (!q.empty())
+	{
+		// Re-update node count as current queue size
+		int node_count = q.size();
+
+		// increment height
+		H++;
+
+		// current level of the binary tree contains nodes
+		while (node_count > 0)
+		{
+			Node2 *first = q.front();
+			q.pop();
+
+			if (first->left != NULL)
+				q.push(first->left);
+
+			if (first->right != NULL)
+				q.push(first->right);
+
+			node_count--;
+		}
+		// level by level
+	}
+
+	return H;
 }
 
 // This function calculates the height of a binary tree by using recursion
-int Solution::height(Node2 *root)
+int Solution::height (Node2 *root)
 {
 	// base case i)
 	if (root == NULL)
@@ -309,41 +378,10 @@ int Solution::length (Node* head)
 	// count from tail ... one by one, understand
 }
 
-// This function removes the N-TH node from the end of given a linked list and returns its head
-// Assumption : n will be valid
-Node* Solution::remove_nth_from_end (Node *head, int n)
-{
-	if (head == NULL) return head;
-
-	// local data
-	Node *current = head, *prev = NULL;
-	int l = length (head, 0);
-
-	// Find (LENGTH - N)-TH node from head
-	for (int j = 0; j < (l - n); j++)
-	{
-		prev = current;
-		current = current->next;
-	}
-
-	if (prev != NULL)
-		prev->next = current->next;
-	else
-	{
-		head = current->next; // move head to rest
-		current->next = NULL; // unlink between current and rest
-	}
-
-	delete current;
-	current = NULL;
-
-	return head;
-}
-
 /*
  * This function calculates the length of the given linked list by using tail recursion
  */
-int Solution::length(Node* head, int l) // use second argument as the counter in this case
+int Solution::length (Node* head, int l) // use second argument as the counter in this case
 {
 	// base case i) head NULL then return length, itself
 	if (head == NULL) return l;
@@ -353,7 +391,7 @@ int Solution::length(Node* head, int l) // use second argument as the counter in
 
 // This function reverses the linked list given as parameter,
 // pointed by HEAD, iterative solution
-Node* Solution::reverse(Node *head)
+Node* Solution::reverse (Node *head)
 {
 	if (head == NULL)
 		return NULL;
@@ -488,7 +526,7 @@ void Solution::print_r (Node *head)
 }
 // This function gets the middle element of the linked list given as parameter,
 // pointed by HEAD
-Node* Solution::get_middle_node(Node *head)
+Node* Solution::get_middle_node (Node *head)
 {
 	Node *first = head, *second = head;
 
@@ -505,7 +543,7 @@ Node* Solution::get_middle_node(Node *head)
 
 // This function detects whether cycle or not in the linked list given as parameter
 // pointed by HEAD
-bool Solution::detect_cycle(Node *head)
+bool Solution::detect_cycle (Node *head)
 {
 	// construct similar logic as getting middle node of linked list
 	Node *first = head, *second = head;
