@@ -576,13 +576,52 @@ bool Solution::detect_cycle (Node *head)
 		if (first == second)
 			return true;
 
-		/*
-		 * else continue the iteration
-		 */
+		// else continue the iteration
 	}
 	// If we reaches this point then there is no cycle in the list since iteration already terminated with NULL
 
 	return false;
+}
+
+// This function returns the node where cycle begins, if given list contains cycle, if NOT, then, returns miss cycle (NULL)
+Node* Solution::detect_cycle_node (Node *head)
+{
+	// use similar logic as in detect cycle which returns 1/0 decisions
+	Node *first = head, *second = head;
+	bool cycle = false;
+
+	while (!cycle && first != NULL && second != NULL && second->next != NULL)
+	{
+		first = first->next; // slow pointer
+		second = second->next->next; // fast pointer
+
+		// first and second points the same node, then cycle detected
+		if (first == second)
+			cycle = true;
+
+		// else continue the iteration
+	}
+	// If we reaches this point then there is no cycle in the list since iteration already terminated with NULL
+
+	// it is clear there is a cycle and seek the node where the cycle detected
+	if (cycle)
+	{
+		// there is no need to NULL check since given list contains a cycle
+
+		// restart from head;
+		first = head;
+
+		while (first != second)
+		{
+			first = first->next;
+			second = second->next;
+		}
+
+		return first;
+	}
+	// cycle remains false, which means there is no cycle in given list
+	else
+		return NULL;
 }
 
 // This function checks whether linked list is palindrome or not given as a parameter
@@ -771,7 +810,7 @@ int Solution::k_largest (std::vector<int>& A, int k)
 	// local data
 	int size = A.size();
 
-	// Actually, K-TH largest means (SIZE-K)-TH smallest, then problems turns finding (SIZE-K) smallest value in the given array
+	// Actually, K-TH largest means (SIZE-K)-TH smallest, then the problem turns finding (SIZE-K) smallest value in the given array
 	return k_small ( (size-k + 1), A, 0, size-1);
 }
 
@@ -862,7 +901,7 @@ void Solution::print_pair_sum (std::vector<int>& A, int sum)
 
 	for (int j = 0; j < size; j++)
 	{
-		int diff = (sum - A[j]); // now problems turn into seeking DIFF in map
+		int diff = (sum - A[j]); // now the problem turns into seeking DIFF in map
 
 		// OK, key,value pair in fact a,b where a+b = sum in order words, sum-a = b
 		if (temp.find(diff) != temp.end()) // contain

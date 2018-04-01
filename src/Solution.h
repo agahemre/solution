@@ -30,6 +30,7 @@ public:
 	bool check_balanced (Node2 *); // LEETCODE
 	Node* get_middle_node(Node *);
 	bool detect_cycle (Node *); // LEETCODE
+	Node* detect_cycle_node (Node *); // LEETCODE
 	int check_palindrome (Node *);
 
 	// utility functions
