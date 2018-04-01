@@ -524,6 +524,25 @@ void Solution::print_r (Node *head)
 	}
 	// base case i) do nothing
 }
+
+// This function pushes the node from back for singly-linked list
+// Note : use as push_back (&head, key)
+void Solution::push_back (Node **head, int key)
+{
+	// local data
+	Node *temp = new Node (key);
+
+	if (*head == NULL)
+	{
+		*head = temp;
+	}
+	else
+	{
+		temp->next = *head;
+		*head = temp;
+	}
+}
+
 // This function gets the middle element of the linked list given as parameter,
 // pointed by HEAD
 Node* Solution::get_middle_node (Node *head)

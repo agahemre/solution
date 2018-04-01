@@ -29,7 +29,7 @@ public:
 	bool check_BST (Node2 *); // LEETCODE
 	bool check_balanced (Node2 *); // LEETCODE
 	Node* get_middle_node(Node *);
-	bool detect_cycle (Node *);
+	bool detect_cycle (Node *); // LEETCODE
 	int check_palindrome (Node *);
 
 	// utility functions
@@ -51,6 +51,7 @@ public:
 	Node* rotate_r (Node *, int); // LEETCODE
 	Node* rotate_r_one (Node *); // LEETCODE
 	void print_r (Node *);
+	void push_back (Node **, int);
 	void print_r (char *);
 	void push_r (Node *, std::vector<int>&);
 
