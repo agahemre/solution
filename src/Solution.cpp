@@ -748,12 +748,12 @@ int Solution::k_small (Node2 *root, int k)
 		return INT_MAX;
 }
 
-// This funcion solves K-TH small problem in recursive way without using any additional data structure
+// This function solves K-TH small problem in recursive way without using any additional data structure
 int Solution::k_small(int k, Node2 *root)
 {
 	if (root != NULL)
 	{
-
+		// TODO
 	}
 	else
 		return INT_MAX;
