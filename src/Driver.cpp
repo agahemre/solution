@@ -72,6 +72,8 @@ int main()
 	int new_k = sze-k+1;
 	int index = solution.search(v, 0, sze-1, target);
 	char word[] = "1234567890"; // sample
+	string s("01");
+	string s0("1");
 
 	// debug purpose
 	printf ("The target index -> %d\n", index);
@@ -88,6 +90,8 @@ int main()
 	printf ("The maximum number of occurrence of word -> %d\n", solution.find_maximum_occurrence(v2) );
 	solution.print_pair_sum(v, sum);
 	printf ("Prints characters in reverse order -> "); solution.print_r (word);
+	printf ("\nCompare %s and %s, result -> %d\n", s.c_str(), s0.c_str(), solution.compare(s, s0) );
+	printf ("\nCompare %s and %s, result -> %d\n", s.c_str(), s0.c_str(), s.compare(s0) ); // TEST WITH BUILT-IN FUNCTION
 
 	return SUCCESS;
 }

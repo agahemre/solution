@@ -6,6 +6,7 @@
 #ifndef SOLUTION_H_
 #define SOLUTION_H_
 
+#include <string>
 #include <stdio.h>
 #include <vector>
 #include "Definitions.h"
@@ -70,6 +71,7 @@ public:
 	void print_pair_sum (std::vector<int>&, int);
 
 	void swap (int *, int *);
+	int compare (std::string, std::string);
 };
 
 #endif /* SOLUTION_H_ */

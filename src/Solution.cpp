@@ -908,3 +908,33 @@ void Solution::print_pair_sum (std::vector<int>& A, int sum)
 			printf ("pair as sum %d, (<%d, %d>) \n", sum, diff, A[j]);
 	}
 }
+
+// This function compares two given string (in recursive way) and returns an integer value
+int Solution::compare (std::string s1, std::string s2)
+{
+	// base case null) both string inputs are NULL character at the same time
+	if (s1.size() == 0 && s2.size() == 0)
+		return 0;
+
+	// base case null.i) first is null or reached null before second
+	if (s1.size() == 0)
+		return -1;
+
+	// base case null.ii) second is null or reached null before first
+	if (s2.size() == 0)
+		return 1;
+
+	// compare first characters, always
+	// base case i.i) not equality
+	if (s1.at(0) < s2.at(0) )
+		return -1;
+	// base case i.ii) not equality
+	else if (s1.at(0) > s2.at(0) )
+		return 1;
+	// recursive part
+	else
+	{
+		// continue to seek with string except first character, always
+		return compare (s1.substr(1), s2.substr(1));
+	}
+}
