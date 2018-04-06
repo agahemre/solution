@@ -158,6 +158,158 @@ bool Solution::check_balanced (Node2 *root)
 }
 
 /*
+ * description : following functions use breadth first search (BFS) strategy, in other words, LEVELORDER TREE WALK
+ */
+
+// This function inverses the given binary tree and returns it in iterative way
+Node2* Solution::invert_BT (Node2 *root)
+{
+	// base case i)
+	if (root == NULL) return NULL;
+
+	// use auxiliary data structure, in this case queue chosen
+	std::queue<Node2 *> q;
+
+	q.push(root);
+
+	while (!q.empty())
+	{
+		// fetch current queue size
+		int size = q.size();
+
+		// current level of the binary tree contains at least one node or more
+		while (size > 0)
+		{
+			Node2 *first = q.front();
+
+			// swap OP.
+			// local data O(1) In Place
+			Node2 *temp = first->left; // remember
+			first->left = first->right;
+			first->right = temp;
+
+			q.pop();
+
+			if (first->left != NULL)
+				q.push(first->left);
+
+			if (first->right != NULL)
+				q.push(first->right);
+
+			// one pop, one decrement
+			size = size - 1;
+		}
+		// level by level
+	}
+
+	return root;
+}
+
+// This function calculates the average value of the nodes on each level in the form of vector*
+std::vector<double> Solution::av_of_levels (Node2 *root)
+{
+	// local data
+	std::vector<double> v;
+
+	// base case i) 'return empty vector'
+	if (root == NULL) return v;
+
+	// Use auxiliary data structure, in this case queue chosen
+	std::queue<Node2 *> q;
+
+	q.push(root);
+
+	while (!q.empty())
+	{
+		// fetch current count size & define counter
+		int size = q.size();
+		int c = 0;
+
+		/*
+		 * @note : It is VERY important to define SUM as long rather than signed integer
+		 * since SUM, in fact addition may overflow, please be careful ! (because of that you failed some of TEST CASES, remember)
+		 */
+		long sum = 0;
+
+
+		// current level of the binary tree contains at least one node or more
+		while (size > 0)
+		{
+			Node2 *first = q.front();
+
+			// job done is here, once you can understand this is the place where print out the nodes' key in LEVELORDER TREE WALK,
+			// in this case, fetch the nodes' key and sum up
+			sum += first->key;
+			q.pop();
+
+			if (first->left != NULL)
+				q.push(first->left);
+
+			if (first->right != NULL)
+				q.push(first->right);
+
+			size = size - 1;
+			c++;
+		}
+		// level by level
+
+		double av = (double) (sum) / (double) (c);
+		v.push_back(av);
+	}
+
+	return v;
+}
+
+// This function calculates the largest value of the nodes on each level in the form of vector*
+std::vector<int> Solution::largest_value_of_levels (Node2 *root)
+{
+	// local data
+	std::vector<int> v;
+
+	// base case i) 'return empty vector'
+	if (root == NULL) return v;
+
+	// use auxiliary data structure, in this case queue chosen
+	std::queue<Node2 *> q;
+
+	q.push(root);
+
+	while (!q.empty())
+	{
+		// fetch current count size & define counter
+		int size = q.size();
+		int c = 0;
+		std::vector<int> inner_v;
+
+		// current level of the binary tree contains at least one node or more
+		while (size > 0)
+		{
+			Node2 *first = q.front();
+
+			// job done is here, once you can understand this is the place where print out the nodes' key in LEVELORDER TREE WALK,
+			// in this case, fetch the nodes' key and pushes into vector
+			inner_v.push_back(first->key); // O(1)
+			q.pop();
+
+			if (first->left != NULL)
+				q.push(first->left);
+
+			if (first->right != NULL)
+				q.push(first->right);
+
+			size = size - 1;
+			c++;
+		}
+		// level by level
+
+		int m = max (inner_v, c);
+		v.push_back(m);
+	}
+
+	return v;
+}
+
+/*
  * This function returns with the node containing the key, otherwise search miss (returning NULL)
  * Note: this function searches the key in given BST
  */

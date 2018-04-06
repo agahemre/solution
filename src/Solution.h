@@ -29,6 +29,9 @@ public:
 	Node2* lca (Node2 *);
 	bool check_BST (Node2 *); // LEETCODE
 	bool check_balanced (Node2 *); // LEETCODE
+	Node2* invert_BT (Node2 *);	// LEETCODE
+	std::vector<double> av_of_levels (Node2 *); // LEETCODE
+	std::vector<int> largest_value_of_levels (Node2 *); // LEETCODE
 	Node* get_middle_node(Node *);
 	bool detect_cycle (Node *); // LEETCODE
 	Node* detect_cycle_node (Node *); // LEETCODE
@@ -72,6 +75,8 @@ public:
 
 	void swap (int *, int *);
 	int compare (std::string, std::string);
+
+
 };
 
 #endif /* SOLUTION_H_ */
