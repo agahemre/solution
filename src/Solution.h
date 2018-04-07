@@ -20,13 +20,7 @@ public:
 	Node2* search (Node2 *, int);
 	Node2* iterative_tree_search (Node2 *, int);
 	Node2* iterative_randomized_tree_search (Node2 *, int);
-	Node2* successor (Node2 *);
-	Node2* predecessor (Node2 *);
 	Node2* construct_maximum_binary_tree(const std::vector<int>&); // LEETCODE
-	/**
-	 * lowest common ancestor
-	 */
-	Node2* lca (Node2 *);
 	bool check_BST (Node2 *); // LEETCODE
 	bool check_balanced (Node2 *); // LEETCODE
 	Node2* invert_BT (Node2 *);	// LEETCODE
@@ -43,6 +37,9 @@ public:
 	Node* remove_nth_from_end (Node *, int); // LEETCODE
 	Node2* min(Node2 *);
 	Node2* max(Node2 *);
+	Node2* successor (Node2 *, Node2 *);
+	Node2* predecessor (Node2 *, Node2 *);
+	Node2* lca (Node2 *, Node2 *, Node2 *); // LEETCODE
 	bool exist(Node2 *, int);
 	int height (Node2 *);
 	int height_iterative (Node2 *);
@@ -75,8 +72,6 @@ public:
 
 	void swap (int *, int *);
 	int compare (std::string, std::string);
-
-
 };
 
 #endif /* SOLUTION_H_ */

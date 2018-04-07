@@ -409,6 +409,133 @@ Node2* Solution::max (Node2 *root)
 }
 
 /**
+ * definition : "lowest common ancestor is defined between two nodes v and w as the lowest node in T
+ * which has both v and w as descendants (a node to be a descendant to itself)
+ */
+// This function finds and returns the node which is the lowest common ancestor of given two nodes
+Node2* Solution::lca (Node2 *root, Node2 *v, Node2 *w)
+{
+	// base case null)
+	if (root == NULL) return NULL;
+
+	// base case i) 'current root is already either node v or node w' then return current root, directly'
+	if (root == w || root == v)
+		return root;
+
+	// recursive part 'continue to seek both left & right subtrees'
+	Node2 *left = lca (root->left, v, w);
+	Node2 *right = lca (root->right, v, w);
+
+	// base case ii.i) 'the one is in roots left subtree, the other one is in roots right subtree'
+	if (left != NULL && right != NULL) return root;
+
+	// base case ii.ii) 'the one is not in its right subtree'
+	else if (left != NULL)
+		return left;
+
+	// base case ii.iii) 'the one is not in its left subtree'
+	else if (right != NULL)
+		return right;
+
+	else
+		return NULL;
+}
+
+// This function returns predecessor node of asked node as in parameter
+// Assumption : root is a binary search tree
+Node2* Solution::predecessor (Node2 *root, Node2 *v)
+{
+	// base case null)
+	if (root == NULL || v == NULL) return NULL;
+
+	// Actually, this problem has two base cases
+	// base case i) 'node v has left subtree, then problem turns into seeking maximum node in this right subtree'
+	if (v->left != NULL)
+		return max (v->left);
+
+	// base case ii) 'node v has NOT left subtree, then problems into searching node with the biggest key smaller than node v.key starting from ROOT'
+	else
+	{
+		// local data
+		bool found = false;
+		Node2 *current = root, *remember = NULL;
+
+		while (!found && current != NULL)
+		{
+			// base case ii) 'current is v'
+			/*
+			if (current == v)
+				return remember; // return successor or successor miss if there is no successor node
+			*/
+
+			// base case iii.i 'current is not v'
+			if (current->key > v->key) // which means look up in LEFT subtree
+				current = current->left;
+
+			// base case iii.ii) 'current is not v'
+			else if (current->key < v->key) // which means look up in RIGHT subtree
+			{
+				remember = current; // remember turning point
+				current = current->right;
+			}
+
+			else
+				found = true;
+		}
+
+		// return predecessor or predecessor miss if there is no predecessor node, the case of remember stayed NULL
+		return remember;
+	}
+}
+
+// This function returns successor node of asked node as in parameter
+// Assumption : root is a binary search tree
+Node2* Solution::successor (Node2 *root, Node2 *v)
+{
+	// base case null)
+	if (root == NULL || v == NULL) return NULL;
+
+	// Actually, this problem has two base cases
+	// base case i) 'node v has right subtree, then problem turns into seeking minimum node in this right subtree'
+	if (v->right != NULL)
+		return min (v->right);
+
+	// base case ii) 'node v has NOT right subtree, then problems into searching node with smallest key bigger than v.key starting from ROOT'
+	else
+	{
+		// local data
+		bool found = false;
+		Node2 *current = root, *remember = NULL;
+
+		while (!found && current != NULL)
+		{
+			// base case ii) 'current is v'
+			/*
+			if (current == v)
+				return remember; // return successor or successor miss if there is no successor node
+			*/
+
+			// base case iii.i 'current is not v'
+			if (current->key > v->key) // which means look up in LEFT subtree
+			{
+				remember = current; // remember turning point
+				current = current->left;
+			}
+
+			// base case iii.ii) 'current is not v'
+			else if (current->key < v->key) // which means look up in RIGHT subtree
+				current = current->right;
+
+			else
+				found = true;
+		}
+
+		// return successor or successor miss if there is no successor node, the case of remember stayed NULL
+		return remember;
+	}
+}
+
+/**
  * definition : the minimum depth is # of nodes along the shortest path from root down to the nearest leaf node
  */
 // This function calculates the minimum depth of a binary tree in recursive way
