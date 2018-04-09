@@ -23,7 +23,7 @@ public:
 	Node2* construct_maximum_binary_tree(const std::vector<int>&); // LEETCODE
 	bool check_BST (Node2 *); // LEETCODE
 	bool check_balanced (Node2 *); // LEETCODE
-	Node2* invert_BT (Node2 *);	// LEETCODE
+	Node2* inverse (Node2 *);	// LEETCODE
 	std::vector<double> av_of_levels (Node2 *); // LEETCODE
 	std::vector<int> largest_value_of_levels (Node2 *); // LEETCODE
 	Node* get_middle_node(Node *);
@@ -34,6 +34,9 @@ public:
 	// utility functions
 	void insert_node (Node2 *);
 	void delete_node (Node2 *, int);
+	void flatten (Node2 *, DIRECTION); // LEETCODE
+	void flatten_r (Node2 *);
+	void flatten_l (Node2 *);
 	Node* remove_nth_from_end (Node *, int); // LEETCODE
 	Node2* min(Node2 *);
 	Node2* max(Node2 *);

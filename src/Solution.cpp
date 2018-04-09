@@ -98,6 +98,68 @@ Node* Solution::remove_nth_from_end (Node *head, int n)
 	return head;
 }
 
+// This function flattens given a binary tree to a linked list in place, based on selected direction as LEFT|RIGHT
+void Solution::flatten (Node2 *root, DIRECTION d)
+{
+	// base case i) 'return with empty hands'
+	if (root == NULL)
+		return;
+
+	// flatten (it) from (it ? of course the given binary tree) from left
+	if (CCW == d)
+		flatten_l (root);
+	else
+		flatten_r (root); // RIGHT
+}
+
+// These functions are helper functions for flatten function
+void Solution::flatten_r (Node2 *root)
+{
+	// defensive check
+	if (root == NULL)
+		return;
+
+	// base case ii.i) 'left subtree not empty'
+	if (root->left != NULL)
+	{
+		// local data
+		Node2 *remember = root->left;
+		root->left = NULL; // unlink
+		Node2 *temp = root->right; // do not forget
+
+		// move left subtree to right subtree at first
+		root->right = remember;
+		// remember->right = temp; // articulate from right this line is wrong, you must find end of its leaf
+
+		while (remember->right != NULL)
+			remember = remember->right;
+
+		// now articulate from right
+		remember->right = temp;
+	}
+
+	// recursive_part
+	flatten_r (root->left);
+	flatten_r (root->right);
+}
+
+void Solution::flatten_l (Node2 *root)
+{
+	// defensive check
+	if (root == NULL)
+		return;
+
+	// yazmaya usendim (AYNI SAGIN SOLU)!
+
+	/**
+	 * @note: why not use inverse of binary tree function
+	 * since the result of the function of FLATTEN LEFT is in fact INVERSE of the result of the function of flattened RIGHT version of binary function
+	 */
+
+	flatten_r (root);
+	inverse (root); // TESTED in LEETCODE, it worked
+}
+
 // This function constructs the binary tree at maximum possible height from vector
 Node2* Solution::construct_maximum_binary_tree(const std::vector<int>& A)
 {
@@ -162,7 +224,7 @@ bool Solution::check_balanced (Node2 *root)
  */
 
 // This function inverses the given binary tree and returns it in iterative way
-Node2* Solution::invert_BT (Node2 *root)
+Node2* Solution::inverse (Node2 *root)
 {
 	// base case i)
 	if (root == NULL) return NULL;
@@ -449,7 +511,7 @@ Node2* Solution::predecessor (Node2 *root, Node2 *v)
 	if (root == NULL || v == NULL) return NULL;
 
 	// Actually, this problem has two base cases
-	// base case i) 'node v has left subtree, then problem turns into seeking maximum node in this right subtree'
+	// base case i) 'node v has left subtree, then problem turns into seeking maximum node in this left subtree'
 	if (v->left != NULL)
 		return max (v->left);
 
