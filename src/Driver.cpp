@@ -8,8 +8,6 @@
 #include <random>
 #include <algorithm>
 
-#define SUCCESS 8 // give any non integer value
-
 using namespace std;
 
 vector<int> construct_demo_vector()
@@ -62,7 +60,6 @@ vector<const char *> construct_demo_vector_v2()
 
 int main()
 {
-	Solution solution;
 	vector<int> v = construct_demo_vector();
 	vector<const char *> v2 = construct_demo_vector_v2();
 	int sze = v.size();
@@ -70,29 +67,31 @@ int main()
 	const int sum = 45;
 	int k = 14;
 	int new_k = sze-k+1;
-	int index = solution.search(v, 0, sze-1, target);
+	int index = solution::search(v, 0, sze-1, target);
 	char word[] = "1234567890"; // sample
 	string s("anilella");
 	string s0("anil");
+	string str("aca");
 
 	// debug purpose
 	printf ("The target index -> %d\n", index);
-	printf ("The max value -> %d\n", solution.max(v, 0, sze-1) );
-	printf ("The max value (last & rest) -> %d\n", solution.max(v, sze) );
+	printf ("The max value -> %d\n", solution::max(v, 0, sze-1) );
+	printf ("The max value (last & rest) -> %d\n", solution::max(v, sze) );
 	printf ("The reverse of the given array -> ");
 
 	// Shuffle vector before test
 	auto rng = std::default_random_engine {};
 	std::shuffle(v.begin(), v.end(), rng);
 
-	printf ("The k-th (%d) smallest value -> %d\n", k, solution.k_small(k, v, 0, sze-1) );
-	printf ("The k-th (%d) largest value -> %d\n", new_k, solution.k_largest(v, new_k) );
-	printf ("The maximum number of occurrence of word -> %d\n", solution.find_maximum_occurrence(v2) );
-	solution.print_pair_sum(v, sum);
-	printf ("Prints characters in reverse order -> "); solution.print_r (word);
+	printf ("The k-th (%d) smallest value -> %d\n", k, solution::k_small(k, v, 0, sze-1) );
+	printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k) );
+	printf ("The maximum number of occurrence of word -> %d\n", solution::find_maximum_occurrence(v2) );
+	solution::print_pair_sum(v, sum);
+	printf ("Prints characters in reverse order -> "); solution::print_r (word);
 	printf ("\n");
-	printf ("Compare %s and %s, result -> %d\n", s.c_str(), s0.c_str(), solution.compare(s, s0) );
+	printf ("Compare %s and %s, result -> %d\n", s.c_str(), s0.c_str(), solution::compare(s, s0) );
 	printf ("Compare %s and %s, result -> %d\n", s.c_str(), s0.c_str(), s.compare(s0) ); // TEST WITH BUILT-IN FUNCTION
+	printf ("Check given string %s is whether palindrome or not, result -> %d\n", str.c_str(), solution::is_palindrome(str) );
 
-	return SUCCESS;
+	return solution::SUCCESS;
 }

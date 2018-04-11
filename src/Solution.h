@@ -11,10 +11,9 @@
 #include <vector>
 #include "Definitions.h"
 
-class Solution
+// This name space contains various algorithm & data structure problems' definition*
+namespace solution
 {
-public:
-
 	void inorder_tree_walk (Node2 *);
 	void levelorder_tree_walk (Node2 *);
 	Node2* search (Node2 *, int);
@@ -29,7 +28,8 @@ public:
 	Node* get_middle_node(Node *);
 	bool detect_cycle (Node *); // LEETCODE
 	Node* detect_cycle_node (Node *); // LEETCODE
-	int check_palindrome (Node *);
+	int is_palindrome (Node *);	// LEETCODE
+	int is_palindrome (std::string);
 
 	// utility functions
 	void insert_node (Node2 *);
@@ -75,6 +75,9 @@ public:
 
 	void swap (int *, int *);
 	int compare (std::string, std::string);
-};
+
+	const int SUCCESS = 8;
+	const int NOT_FOUND = -1;
+}
 
 #endif /* SOLUTION_H_ */
