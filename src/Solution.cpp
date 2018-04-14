@@ -98,6 +98,35 @@ namespace solution
 		return head;
 	}
 
+	// This function creates the new tree node and inserts into BST, then returns the most current BST in iterative way
+	// @note : You need to maintain BST property and keys distinct
+	Node2* insert_key (Node2 *root, int k)
+	{
+		// local data
+		Node2 *current = root, *remember = NULL;
+
+		while (current != NULL)
+		{
+			// you need remember turning point
+			remember = current;
+
+			if (k < current->key) // goto left subtree
+				current = current->left;
+			else
+				current = current->right;
+		}
+		// Now we reached leaf node somewhere in the tree
+
+		if (remember == NULL) // in fact, base case i) root NULL since remember stayed in NULL
+			root = new Node2(k); // then, node with k become root
+		else if (k < remember->key)
+			remember->left = new Node2(k);
+		else
+			remember->right = new Node2(k);
+
+		return root;
+	}
+
 	// This function flattens given a binary tree to a linked list in place, based on selected direction as LEFT|RIGHT
 	void flatten (Node2 *root, DIRECTION d)
 	{
@@ -1008,6 +1037,55 @@ namespace solution
 			// continue to seek with string except first and last characters
 			return is_palindrome (s.substr(1, size-2));
 		}
+	}
+
+	// This function checks whether given string has valid parentheses or not
+	// Assumption : given string can only contains the following character set; '{','}','[',']','(',')'
+	int has_valid_parentheses (std::string s)
+	{
+		// base case i) 'empty string'
+		unsigned int size = s.size();
+
+		if (size == 0)
+			return 1;
+
+		// use an auxiliary data structure, in this case stack chosen
+		std::stack<char> stck;
+
+		/**
+		 * The idea is simple in a way that;
+		 * If current character belongs to opened, then, push it to stack
+		 * Else if current character belongs to closed, then, pop from stack
+		 * and compare characters
+		 */
+
+		for (unsigned int i = 0; i < size; i++)
+		{
+			if ( is_opened (s.at(i) ) )
+				stck.push(s.at(i));
+			else if ( is_closed (s.at(i) ) )
+			{
+				// defensive check
+				if (!stck.empty())
+				{
+					// fetch top element
+					char p = stck.top();
+					char q = s.at(i);
+
+					if ( is_valid (p, q) )
+						stck.pop();
+					else
+						return false;
+				}
+				else
+					return 0;
+			}
+		}
+
+		if (stck.empty())
+			return 1;
+		else
+			return 0;
 	}
 
 	// This function pushes the key from the given singly-linked list in reverse order

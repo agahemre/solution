@@ -30,9 +30,28 @@ namespace solution
 	Node* detect_cycle_node (Node *); // LEETCODE
 	int is_palindrome (Node *);	// LEETCODE
 	int is_palindrome (std::string);
+	int has_valid_parentheses (std::string); // LEETCODE
+
+	/**
+	 * @description : following functions are helper functions for has_valid_parentheses function
+	 */
+	inline bool is_valid (const char p, const char q)
+	{
+		return ( (p == '{' && q == '}') || (p == '[' && q == ']') || (p == '(' && q == ')') );
+	}
+
+	inline bool is_opened (const char p)
+	{
+		return (p == '{' || p == '[' || p == '(');
+	}
+
+	inline bool is_closed (const char q)
+	{
+		return (q == '}' || q == ']' || q == ')');
+	}
 
 	// utility functions
-	void insert_node (Node2 *);
+	Node2* insert_key (Node2 *, int);
 	void delete_node (Node2 *, int);
 	void flatten (Node2 *, DIRECTION); // LEETCODE
 	void flatten_r (Node2 *);
