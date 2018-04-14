@@ -15,6 +15,16 @@ struct Node2
 	Node2(int k) : key(k), left(NULL), right(NULL)  {}
 };
 
+// this structure defines a AVL tree node property
+struct Node3
+{
+	int key;
+	int height;
+	Node3 *left;
+	Node3 *right;
+	Node3(int k) : key(k), height(0), left(NULL), right(NULL) {}
+};
+
 // this structure defines a linear node property
 struct Node
 {
