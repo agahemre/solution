@@ -8,6 +8,7 @@
 #include <map>
 #include <unordered_map>
 #include "Solution.h"
+#include <algorithm>
 #include <math.h>
 #include <climits>
 
@@ -1075,7 +1076,7 @@ namespace solution
 					if ( is_valid (p, q) )
 						stck.pop();
 					else
-						return false;
+						return 0;
 				}
 				else
 					return 0;
@@ -1301,25 +1302,68 @@ namespace solution
 		*y = temp;
 	}
 
-	/*
-	 * This function finds the maximum # of occurrence any number given in the list
-	 */
+
+	// These functions finds the maximum # of occurrence any number given in the list
 	int find_maximum_occurrence (std::vector<const char *>& A)
 	{
-		// Note : Use map in order to catch O(N) solution P.S. you will remember this line
-		int size = A.size();
-		std::map<const char *, int> temp; // define map onto stack
+		// local data
+		int max_occur = 0;
 
-		for (int j = 0; j < size; j++)
+		std::unordered_map<const char *, int> temp; // define map onto stack
+
+		for (auto const& e : A)
 		{
-			if (temp.find(A[j]) == temp.end()) // not contain
-				temp.insert(std::pair<const char *, int> (A[j], 1) );
+			if (temp.find(e) == temp.end()) // not contain
+				temp.insert(std::pair<const char *, int> (e, 1) );
 			else // already contain
-				temp.find(A[j])->second = temp.find(A[j])->second + 1; // simply increment the occurrence
+				temp.find(e)->second = 1 + temp.find(e)->second; // simply increment the occurrence
 		}
 
-		// you know map already sorted, reach out with the iterator begin
-		return temp.begin()->second;
+		// @note : maximum occurrence remains zero if empty list (array) passed before
+		max_occur = std::max_element(temp.begin(), temp.end(), comp)->second;
+		return max_occur;
+	}
+
+	/**
+	 * @example: I(NPUT): [3,1,8,5,6,6,9,8,7,7,6]
+	 * first find the occurrence of each element and grouping them
+	 * i. [3,1,5,9] -> # of 1 occurrence, [8,8,7,7] -> # of 2 occurrences, [6,6,6] -> # of 3 occurrences
+	 * ii. sort these 'sub-arrays', i.e, [1,3,5,9], [7,7,8,8], and [6,6,6]
+	 * finally, put them into 'the array' as [1,3,5,9,7,7,8,8,6,6,6]
+	 * O(OUTPUT) : [1,3,5,9,7,7,8,8,6,6,6]
+	 */
+
+	// This function sorts the given array first by number of its elements occurrence, then, its elements
+	void custom_sort (std::vector<int>& A)
+	{
+		// local data
+		unsigned int size = A.size(), i = 0, ii = 0;
+		std::map<int, int> temp; // define map
+		std::multimap<int, int> temp_multi;
+
+		for (; i < size; i++)
+		{
+			if (temp.find(A[i]) == temp.end()) // not contain
+				temp.insert (std::pair<int, int> (A[i], 1));
+			else
+				temp.find(A[i])->second = 1 + temp.find(A[i])->second;
+		}
+
+		/**
+		 * @note : the aim is to re-arrange the map not 'by key', 'by value'
+		 */
+		for (auto const &k : temp)
+			temp_multi.insert(std::make_pair(k.second, k.first)); // Re-arrange the pairs
+
+		for (auto const &j : temp_multi)
+		{
+			// Re-place the vector
+			for (int a = 0; a < j.first; a++)
+			{
+				A[ii] = j.second;
+				ii++;
+			}
+		}
 	}
 
 	/*
@@ -1345,7 +1389,7 @@ namespace solution
 		}
 	}
 
-	// This function compares two given string (in recursive way) and returns an integer value
+	// This function compares two given strings (in recursive way) and returns an integer value
 	int compare (std::string s1, std::string s2)
 	{
 		// base case null) both string inputs are NULL character at the same time
@@ -1373,5 +1417,35 @@ namespace solution
 			// continue to seek with string except first character, always
 			return compare (s1.substr(1), s2.substr(1));
 		}
+	}
+
+	/**
+	 * @example : Suppose you have the following strings a and b as "ABC", "DEF", in respectively.
+	 * Following function merges these string as ADBECF as O(UTPUT)
+	 */
+
+	// This function is the wrapper function for merge_str (string, string, integer)
+	std::string merge_str(std::string a, std::string b)
+	{
+		return merge_str (a, b, 1);
+	}
+
+	// This function merges two given strings (in recursive way) and returns the single merged string
+	std::string merge_str (std::string a, std::string b, unsigned int i)
+	{
+		// base case i) 'b is null or reached null before a'
+		if (b.size() == 0)
+			return a;
+
+		// base case ii) 'current index exceeds the length of a'
+		if (i >= a.size())
+			return a.append(b);
+
+		// job done part
+		a.insert(i, b.substr(0, 1));
+
+		// recursive part
+		i+=2;
+		return merge_str (a, b.substr(1), i);
 	}
 }

@@ -92,8 +92,16 @@ namespace solution
 	int find_maximum_occurrence (std::vector<const char *>&);
 	void print_pair_sum (std::vector<int>&, int);
 
+	void custom_sort (std::vector<int>&);
 	void swap (int *, int *);
 	int compare (std::string, std::string);
+	std::string merge_str (std::string, std::string);
+	std::string merge_str (std::string, std::string, unsigned int);
+
+	inline bool comp (const std::pair<const char *, int>& f, const std::pair<const char *, int>& s)
+	{
+		return f.second < s.second;
+	}
 
 	const int SUCCESS = 8;
 	const int NOT_FOUND = -1;
