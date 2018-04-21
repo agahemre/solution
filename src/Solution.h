@@ -25,6 +25,7 @@ namespace solution
 	Node2* inverse (Node2 *);	// LEETCODE
 	std::vector<double> av_of_levels (Node2 *); // LEETCODE
 	std::vector<int> largest_value_of_levels (Node2 *); // LEETCODE
+	std::vector<int> right_side_view (Node2 *); // LEETCODE
 	Node* get_middle_node(Node *);
 	bool detect_cycle (Node *); // LEETCODE
 	Node* detect_cycle_node (Node *); // LEETCODE

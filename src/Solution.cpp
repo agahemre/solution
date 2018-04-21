@@ -402,6 +402,61 @@ namespace solution
 		return v;
 	}
 
+	/**
+	 * @description : given a binary tree, imagine yourself standing on the RIGHT side of it,
+	 * return the values of the nodes you can see ordered from top to bottom
+	 */
+
+	// This function aggregates the tree node values into vector in order to the @description above
+	std::vector<int> right_side_view (Node2 *root)
+	{
+		// local data
+		std::vector<int> v;
+
+		// base case i) 'return empty vector'
+		if (root == NULL) return v;
+
+		// Use auxiliary data structure, in this case queue chosen
+		std::queue<Node2 *> q;
+
+		q.push(root);
+
+
+		while (!q.empty())
+		{
+			// fetch current size of current level of the binary tree
+			int size = q.size();
+
+			while (size > 0)
+			{
+				Node2 *first = q.front();
+
+				/**
+				 * @note : If the current level of the binary tree contains two nodes,
+				 * then, first of all, left node simply be dropped vector from queue without pushing into result
+				 * since it is a FIFO data structure
+				 */
+
+				if (size == 1)
+					v.push_back (first->key);
+
+				q.pop();
+
+				if (first->left != NULL)
+					q.push (first->left);
+
+				if (first->right != NULL)
+					q.push (first->right);
+
+				// decrement size
+				size = size - 1;
+			}
+		}
+		// level by level
+
+		return v;
+	}
+
 	/*
 	 * This function returns with the node containing the key, otherwise search miss (returning NULL)
 	 * Note: this function searches the key in given BST
@@ -1296,14 +1351,13 @@ namespace solution
 	// @usage : swap (&X, &Y)
 	void swap (int *x, int *y)
 	{
-		// local data O(1) In Place
-		int temp = *x;
+		// local data
+		int temp = *x; // O(1) In Place
 		*x = *y;
 		*y = temp;
 	}
 
-
-	// These functions finds the maximum # of occurrence any number given in the list
+	// This function finds the maximum # of occurrence of the word given in the list
 	int find_maximum_occurrence (std::vector<const char *>& A)
 	{
 		// local data
@@ -1366,12 +1420,11 @@ namespace solution
 		}
 	}
 
-	/*
-	 * This function prints pair from given array whose sum is equal the the given sum
-	 */
+	// This function prints pair from given array whose sum is equal the the given sum
 	void print_pair_sum (std::vector<int>& A, int sum)
 	{
-		// Note: similar logic as in the function finding maximum occurrence problem expected solution complexity : O (N)
+		// @note : expected solution complexity O(N)
+		// local data
 		int size = A.size();
 		std::unordered_map<int, int> temp; // define map onto stack
 
@@ -1420,17 +1473,17 @@ namespace solution
 	}
 
 	/**
-	 * @example : Suppose you have the following strings a and b as "ABC", "DEF", in respectively.
+	 * @example : Suppose you have the following strings a and b as "ABC", "DEF", in respect.
 	 * Following function merges these string as ADBECF as O(UTPUT)
 	 */
 
-	// This function is the wrapper function for merge_str (string, string, integer)
-	std::string merge_str(std::string a, std::string b)
+	// This function is wrapper function for merge_str (string, string, integer)
+	std::string merge_str (std::string a, std::string b)
 	{
 		return merge_str (a, b, 1);
 	}
 
-	// This function merges two given strings (in recursive way) and returns the single merged string
+	// This function merges two given strings (in recursive way) and returns the merged string
 	std::string merge_str (std::string a, std::string b, unsigned int i)
 	{
 		// base case i) 'b is null or reached null before a'
