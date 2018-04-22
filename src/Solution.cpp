@@ -275,11 +275,8 @@ namespace solution
 			{
 				Node2 *first = q.front();
 
-				// swap OP.
-				// local data O(1) In Place
-				Node2 *temp = first->left; // remember
-				first->left = first->right;
-				first->right = temp;
+				// job done
+				swap (&(first->left), &(first->right));
 
 				q.pop();
 
@@ -455,6 +452,65 @@ namespace solution
 		// level by level
 
 		return v;
+	}
+
+	// This function determines whether given binary tree has a ROOT-TO-LEAF path such that all keys along that path are equal to given sum or not
+	bool has_path_sum (Node2 *root, int sum)
+	{
+		// base case i) 'root NULL'
+		if (root == NULL)
+			return false;
+
+		// subtract the current roots' key from sum which is the actual job in order to reduce problem size
+		sum = sum - (root->key);
+		bool is_leaf = ( (root->left == NULL) && (root->right == NULL) );
+
+		// base case ii) 'sum equal to zero AND reached a leaf node'
+		if (is_leaf && sum == 0)
+			return true;
+
+		// recursive part
+		bool left = has_path_sum (root->left, sum);
+		bool right = has_path_sum (root->right, sum);
+
+		return (left || right);
+	}
+
+	// This function finds the number of paths that any keys along the path are equal to given sum, returns zero if there is not
+	// @note : the path does not need to start or end at the root or a leaf, yet it must go downwards
+	int path_sum (Node2 *root, int sum)
+	{
+		// base case i) 'root NULL'
+		if (root == NULL)
+			return 0;
+
+		// local data
+		int path_count = 0;
+
+		path_sum (root, sum, path_count);
+
+		// This part actually not the best solution since too many recursive call happen, yet it worked
+		return path_count + path_sum (root->left, sum) + path_sum (root->right, sum);
+	}
+
+	// This function increments the path count whenever equality be found (between all keys' sum along a path and given sum)
+	void path_sum (Node2 *root, int sum, int& path_count)
+	{
+		// base case i) 'do nothing'
+		if (root == NULL) return;
+
+		// subtract the current roots' key from sum which is the actual job in order to reduce problem size
+		sum = sum - (root->key);
+
+		// base case ii) 'sum equal to zero'
+		if (sum == 0)
+		{
+			path_count = path_count + 1; // a path be found, increment the count
+		}
+
+		// recursive part
+		path_sum (root->left, sum, path_count);
+		path_sum (root->right, sum, path_count);
 	}
 
 	/*
@@ -1355,6 +1411,15 @@ namespace solution
 		int temp = *x; // O(1) In Place
 		*x = *y;
 		*y = temp;
+	}
+
+	// @usage : swap (&Node2, &Node2)
+	void swap (Node2 **first, Node2 **second)
+	{
+		// local data
+		Node2 *temp = *first; // O(1) In Place
+		*first = *second;
+		*second = temp;
 	}
 
 	// This function finds the maximum # of occurrence of the word given in the list

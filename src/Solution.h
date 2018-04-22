@@ -26,6 +26,9 @@ namespace solution
 	std::vector<double> av_of_levels (Node2 *); // LEETCODE
 	std::vector<int> largest_value_of_levels (Node2 *); // LEETCODE
 	std::vector<int> right_side_view (Node2 *); // LEETCODE
+	bool has_path_sum (Node2 *, int); // LEETCODE
+	int path_sum (Node2 *, int); // LEETCODE
+	void path_sum (Node2 *, int, int&);
 	Node* get_middle_node(Node *);
 	bool detect_cycle (Node *); // LEETCODE
 	Node* detect_cycle_node (Node *); // LEETCODE
@@ -95,6 +98,7 @@ namespace solution
 
 	void custom_sort (std::vector<int>&);
 	void swap (int *, int *);
+	void swap (Node2 **, Node2 **);
 	int compare (std::string, std::string);
 	std::string merge_str (std::string, std::string);
 	std::string merge_str (std::string, std::string, unsigned int);
