@@ -6,6 +6,8 @@
 #ifndef DEFINITIONS_H_
 #define DEFINITIONS_H_
 
+#include <stdio.h>
+
 // this structure defines a tree (non-linear) node property
 struct Node2
 {

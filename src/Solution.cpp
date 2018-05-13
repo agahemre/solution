@@ -3,12 +3,9 @@
  *  @author: EA
  */
 
+#include "Solution.h"
 #include <stack>
 #include <queue>
-#include <map>
-#include <unordered_map>
-#include "Solution.h"
-#include <algorithm>
 #include <math.h>
 #include <climits>
 
@@ -1420,27 +1417,6 @@ namespace solution
 		Node2 *temp = *first; // O(1) In Place
 		*first = *second;
 		*second = temp;
-	}
-
-	// This function finds the maximum # of occurrence of the word given in the list
-	int find_maximum_occurrence (std::vector<const char *>& A)
-	{
-		// local data
-		int max_occur = 0;
-
-		std::unordered_map<const char *, int> temp; // define map onto stack
-
-		for (auto const& e : A)
-		{
-			if (temp.find(e) == temp.end()) // not contain
-				temp.insert(std::pair<const char *, int> (e, 1) );
-			else // already contain
-				temp.find(e)->second = 1 + temp.find(e)->second; // simply increment the occurrence
-		}
-
-		// @note : maximum occurrence remains zero if empty list (array) passed before
-		max_occur = std::max_element(temp.begin(), temp.end(), comp)->second;
-		return max_occur;
 	}
 
 	/**

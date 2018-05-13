@@ -119,7 +119,8 @@ int main()
 
 	printf ("The k-th (%d) smallest value -> %d\n", k, solution::k_small(k, v, 0, sze-1) );
 	printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k) );
-	printf ("The maximum number of occurrence of word -> %d\n", solution::find_maximum_occurrence(v2) );
+	printf ("The number of maximum occurrences amongst number[s] -> %d\n", solution::find_max_occur(c_sort) );
+	printf ("The number of maximum occurrences amongst word[s] -> %d\n", solution::find_max_occur(v2) );
 	solution::print_pair_sum(v, sum);
 	printf ("Prints characters in reverse order -> "); solution::print_r (word);
 	printf ("\n");
