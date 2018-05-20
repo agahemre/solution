@@ -91,11 +91,11 @@ int main()
 	vector<int> c_sort = construct_demo_vector_custom_sort();
 	vector<const char *> v2 = construct_demo_vector_v2();
 	int sze = v.size();
-	const int target = 71;
+	const int target = 37;
 	const int sum = 45;
+	const int rotation = 102;
 	int k = 14;
 	int new_k = sze-k+1;
-	int index = solution::search(v, 0, sze-1, target);
 	char word[] = "1234567890"; // sample
 	string s("anilella");
 	string s0("anil");
@@ -108,15 +108,24 @@ int main()
 	string w("keyhbmeknckfavrpqyyfjxjjmivtsftikovkcdcwefctqrqjryhtlcvstm");
 
 	// debug purpose
-	printf ("The target index -> %d\n", index);
+	printf ("The target -> %d, and its index -> %d\n", target, solution::search(v, 0, sze-1, target));
 	printf ("The max value -> %d\n", solution::max(v, 0, sze-1) );
 	printf ("The max value (last & rest) -> %d\n", solution::max(v, sze) );
-	printf ("The reverse of the given array -> ");
+	printf ("Result array after shuffle operation\n");
 
 	// Shuffle vector before test
 	auto rng = std::default_random_engine {};
 	std::shuffle(v.begin(), v.end(), rng);
 
+	for (auto const& e : v) printf ("%d\t", e);
+	printf("\n");
+
+	printf ("Reverse of array, and apply left rotate %d times:\n", rotation);
+	solution::reverse (v, 0, v.size()-1);
+	solution::rotate (v, rotation, CCW);
+
+	for (auto const& e : v) printf ("%d\t", e);
+	printf("\n");
 	printf ("The k-th (%d) smallest value -> %d\n", k, solution::k_small(k, v, 0, sze-1) );
 	printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k) );
 	printf ("The number of maximum occurrences amongst number[s] -> %d\n", solution::find_max_occur(c_sort) );
@@ -138,5 +147,5 @@ int main()
 		printf ("%d ", j);
 	printf("\n");
 
-	return solution::SUCCESS;
+	return SUCCESS;
 }
