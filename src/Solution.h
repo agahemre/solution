@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include <map>
 #include <unordered_map>
 
 // This name space contains various algorithm & data structure problems' definition*
@@ -76,38 +75,131 @@ namespace solution
 	int length (Node *, int);
 	Node* reverse (Node *);
 	Node* reverse (Node *, int, int); // LEETCODE
-	std::vector<int> reverse (std::vector<int>&, int, int);
-	std::vector<int> rotate_rl (std::vector<int>&, int, DIRECTION);
 	Node* rotate_r (Node *, int); // LEETCODE
 	Node* rotate_r_one (Node *); // LEETCODE
 	void print_r (Node *);
 	void push_back (Node **, int);
 	void print_r (char *);
 	void push_r (Node *, std::vector<int>&);
-
-	int search (const std::vector<int>&, int, int, int);
 	int max (const std::vector<int>&, int, int);
 	int max (const std::vector<int>&, int);
 	int k_small (int, std::vector<int>&, int, int);
 	int k_small (Node2 *, int); // LEETCODE
 	int k_small (int, Node2 *); // LEETCODE
 	int k_largest (std::vector<int>&, int); // LEETCODE
-	int h_partition (std::vector<int>&, int, int);
-	int l_partition (std::vector<int>&, int, int);
 	void construct_vector (Node2 *, std::vector<int>&);
 
+	// @usage : swap (X, Y)
+	template <typename type_t> void swap (type_t& __first, type_t& __second)
+	{
+		// local data
+		type_t temp = __first; // O(1) In Place
+		__first = __second;
+		__second = temp;
+	}
+
+	// This function reverses the given vector, i as start index and j as last index
+	template <typename type_t> std::vector<type_t> reverse (std::vector<type_t>& __array, int i, int j)
+	{
+		// WHILE I-TH index smaller than J-TH index, then,
+		// SWAP the elements and move the indices towards each other
+		while (i < j)
+		{
+			swap(__array[i], __array[j]);
+
+			// Increment start index and decrement last index by 1 for each iteration
+			i++; j--;
+		}
+
+		return __array; // result of this function changes the original array
+	}
+
+	// This function implements the reversal algorithm for array rotation
+	template <typename type_t> std::vector<type_t> rotate (std::vector<type_t>& __array, int k, DIRECTION d)
+	{
+		// local data
+		int n = __array.size();
+
+		if (n == 0) return __array; // defensive check
+
+		// LEETCODE test update
+		k = k % n;
+
+		// this means direction CCW, left rotate by k
+		if (CCW == d)
+		{
+			// split the array properly
+			reverse (__array, 0, k-1);
+			reverse (__array, k, n-1);
+		}
+		// this means direction CW, right rotate by k
+		else
+		{
+			// split the array properly
+			reverse (__array, 0, n-k-1);
+			reverse (__array, n-k, n-1);
+		}
+
+		// reverse of reverse
+		return reverse (__array, 0, n-1);
+	}
+
+	// This function searches target in the given sorted array
+	template <typename type_t> int search (const std::vector<int>& __array, int __first, int __last, type_t __target)
+	{
+		if (__first <= __last)
+		{
+			int mid = __first + (__last - __first) / 2; // avoid overflow a negative value
+
+			// base case ii) 'found'
+			if (__target == __array[mid])
+				return mid;
+			else if (__target > __array[mid]) // continue to search in array::RIGHT
+				return search (__array, (mid+1), __last, __target);
+			else // continue to search in array::LEFT
+				return search (__array, __first, (mid-1), __target);
+		}
+		// base case i) 'not found' when first index exceeds last index
+
+		return NOT_FOUND; // search miss
+	}
+
+	// This function implements the Lomuto's partition
+	template <typename type_t> int l_partition (std::vector<type_t>& __array, int p, int r)
+	{
+		type_t pivot = __array[r]; // select pivot as last element
+		int i = p - 1;
+
+		for (int j = p; j <= r - 1; j++)
+		{
+			if (__array[j] <= pivot)
+			{
+				i = i+1;
+				swap (__array[i], __array[j]);
+			}
+		}
+
+		swap (__array[i+1], __array[r]);
+		return (i+1);
+	}
+
+	// This function implements the Hoare's partition
+	template <typename type_t> int h_partition (std::vector<type_t>& __array, int p, int q)
+	{
+		// TODO
+	}
+
 	// This function finds the number of maximum occurrences amongst elements of the given list
-	template <typename T> int find_max_occur (std::vector<T>& A)
+	template <typename type_t> int find_max_occur (std::vector<type_t>& __array)
 	{
 		// local data
 		int max_occur = 0;
+		std::unordered_map<type_t, int> temp;
 
-		std::unordered_map<T, int> temp; // define map onto stack
-
-		for (auto const& e : A)
+		for (auto const& e : __array)
 		{
 			if (temp.find(e) == temp.end()) // not contain
-				temp.insert(std::pair<T, int> (e, 1) );
+				temp.insert(std::pair<type_t, int> (e, 1) );
 			else // already contain
 				temp.find(e)->second = 1 + temp.find(e)->second; // simply increment the occurrence
 		}
@@ -115,8 +207,8 @@ namespace solution
 		// @note : maximum occurrence remains zero if empty list (array) passed before
 		max_occur = std::max_element(temp.begin(), temp.end(),
 				// lambda expression begins
-				[](const std::pair<T, int>& f, const std::pair<T, int>& s) {
-					return f.second < s.second;
+				[](const std::pair<type_t, int>& __p, const std::pair<type_t, int>& __q) {
+					return __p.second < __q.second;
 				})->second;
 
 		return max_occur;
@@ -124,14 +216,9 @@ namespace solution
 
 	void print_pair_sum (std::vector<int>&, int);
 	void custom_sort (std::vector<int>&);
-	void swap (int *, int *);
-	void swap (Node2 **, Node2 **);
 	int compare (std::string, std::string);
 	std::string merge_str (std::string, std::string);
 	std::string merge_str (std::string, std::string, unsigned int);
-
-	const int SUCCESS = 8;
-	const int NOT_FOUND = -1;
 }
 
 #endif /* SOLUTION_H_ */

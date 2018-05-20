@@ -6,6 +6,7 @@
 #include "Solution.h"
 #include <stack>
 #include <queue>
+#include <map>
 #include <math.h>
 #include <climits>
 
@@ -273,7 +274,7 @@ namespace solution
 				Node2 *first = q.front();
 
 				// job done
-				swap (&(first->left), &(first->right));
+				swap (first->left, first->right);
 
 				q.pop();
 
@@ -1209,75 +1210,6 @@ namespace solution
 		// base case i) do nothing
 	}
 
-	// This function implements the reversal algorithm for array rotation
-	std::vector<int> rotate_rl (std::vector<int>& A, int k, DIRECTION d)
-	{
-		// local data
-		int n = A.size();
-
-		if (n == 0) return A; // defensive check
-
-		// LEETCODE test update
-		k = k % n;
-
-		// this means direction CCW, left rotate by k
-		if (CCW == d)
-		{
-			// split the array properly
-			reverse (A, 0, k-1);
-			reverse (A, k, n-1);
-		}
-		// this means direction CW, right rotate by k
-		else
-		{
-			// split the array properly
-			reverse (A, 0, n-k-1);
-			reverse (A, n-k, n-1);
-		}
-
-		// reverse of reverse
-		return reverse (A, 0, n-1);
-	}
-
-	// This function reverses the given vector, i as started index and j as last index at the beginning
-	std::vector<int> reverse (std::vector<int>& A, int i, int j)
-	{
-		// WHILE I-TH index smaller than J-TH index, then
-		// SWAP the elements and move the indices towards each other
-		while (i < j)
-		{
-			swap(&A[i], &A[j]);
-
-			// Increment start index and decrement last index by 1 for each iteration
-			i++;
-			j--;
-		}
-
-		return A;
-	}
-
-	// This function searches the target in the given sorted array
-	int search (const std::vector<int>& A, int first, int last, int target)
-	{
-		// base case i)
-		if (first > last)
-		{
-			return NOT_FOUND; // search miss
-		}
-		else
-		{
-			int mid = first + (last - first) / 2; // avoid overflow a negative value
-
-			// base case ii)
-			if (target == A[mid])
-				return mid;
-			else if (target > A[mid]) // continue to search in array::RIGHT
-				return search(A, mid+1, last, target);
-			else // continue to search in array::LEFT
-				return search(A, first, mid-1, target);
-		}
-	}
-
 	/** This function returns K-TH smallest value in a binary search tree
 	 *	Assume k in in valid range
 	 */
@@ -1374,49 +1306,6 @@ namespace solution
 			return A[pivotIdx]; // base case
 		else
 			return k_small (k - (pivotIdx - first + 1), A, pivotIdx+1, last);
-	}
-
-	// This function implements the Lomuto's partition
-	int l_partition (std::vector<int>& A, int p, int r)
-	{
-		int pivot = A[r]; // select pivot as last element
-		int i = p - 1;
-
-		for (int j = p; j <= r - 1; j++)
-		{
-			if (A[j] <= pivot)
-			{
-				i = i+1;
-				swap (&A[i], &A[j]);
-			}
-		}
-
-		swap (&A[i+1], &A[r]);
-		return (i+1);
-	}
-
-	// This function implements the Hoare's partition
-	int h_partition (std::vector<int>& A, int p, int q)
-	{
-		// TODO
-	}
-
-	// @usage : swap (&X, &Y)
-	void swap (int *x, int *y)
-	{
-		// local data
-		int temp = *x; // O(1) In Place
-		*x = *y;
-		*y = temp;
-	}
-
-	// @usage : swap (&Node2, &Node2)
-	void swap (Node2 **first, Node2 **second)
-	{
-		// local data
-		Node2 *temp = *first; // O(1) In Place
-		*first = *second;
-		*second = temp;
 	}
 
 	/**
