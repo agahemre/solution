@@ -38,4 +38,7 @@ struct Node
 // this enumeration defines a rotation direction
 typedef enum {CCW=1, CW=0} DIRECTION;
 
+const int SUCCESS = 8;
+const int NOT_FOUND = -1;
+
 #endif /* DEFINITIONS_H_ */
