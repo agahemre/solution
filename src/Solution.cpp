@@ -1281,33 +1281,6 @@ namespace solution
 		}
 	}
 
-	// This function returns the K-TH largest value in the given array
-	int k_largest (std::vector<int>& A, int k)
-	{
-		// local data
-		int size = A.size();
-
-		// Actually, K-TH largest means (SIZE-K)-TH smallest, then the problem turns finding (SIZE-K) smallest value in the given array
-		return k_small ( (size-k + 1), A, 0, size-1);
-	}
-
-	// This function returns the K-TH smallest value in the given array
-	int k_small (int k, std::vector<int>& A, int first, int last)
-	{
-		if (k > (last - first +1) || k < 0)
-			return INT_MAX;
-
-		// select pivot index based on lomuto's partition
-		int pivotIdx = l_partition(A, first, last);
-
-		if (k < (pivotIdx - first + 1) )
-			return k_small (k, A, first, pivotIdx-1);
-		else if (k == (pivotIdx - first + 1) )
-			return A[pivotIdx]; // base case
-		else
-			return k_small (k - (pivotIdx - first + 1), A, pivotIdx+1, last);
-	}
-
 	/**
 	 * @example: I(NPUT): [3,1,8,5,6,6,9,8,7,7,6]
 	 * first find the occurrence of each element and grouping them

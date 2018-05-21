@@ -83,10 +83,8 @@ namespace solution
 	void push_r (Node *, std::vector<int>&);
 	int max (const std::vector<int>&, int, int);
 	int max (const std::vector<int>&, int);
-	int k_small (int, std::vector<int>&, int, int);
 	int k_small (Node2 *, int); // LEETCODE
 	int k_small (int, Node2 *); // LEETCODE
-	int k_largest (std::vector<int>&, int); // LEETCODE
 	void construct_vector (Node2 *, std::vector<int>&);
 
 	// @usage : swap (X, Y)
@@ -167,6 +165,7 @@ namespace solution
 	// This function implements the Lomuto's partition
 	template <typename type_t> int l_partition (std::vector<type_t>& __array, int p, int r)
 	{
+		// local data
 		type_t pivot = __array[r]; // select pivot as last element
 		int i = p - 1;
 
@@ -183,10 +182,95 @@ namespace solution
 		return (i+1);
 	}
 
-	// This function implements the Hoare's partition
+	// This function implements the Hoare's partition scheme
 	template <typename type_t> int h_partition (std::vector<type_t>& __array, int p, int q)
 	{
-		// TODO
+		// local data
+		type_t pivot = __array[p]; // select pivot as first element
+		int i = p-1, j = q+1;
+
+		while (true)
+		{
+			do
+			{
+				i = i+1;
+			}while (__array[i] < pivot);
+
+			do
+			{
+				j = j-1;
+			}while (__array[j] > pivot);
+
+			if (i < j)
+				swap (__array[i], __array[j]);
+			else
+				return j;
+		}
+	}
+
+	// This function uses Lomuto's partition scheme
+	// Assumption: k always valid such that 1 <= k <= length of array
+	template <typename type_t> type_t k_small_lomuto (int k, std::vector<type_t>& A, int first, int last)
+	{
+		// select pivot index based on lomuto's partition scheme
+		int pivot = l_partition(A, first, last);
+
+		if (k < (pivot - first + 1) )
+			return k_small_lomuto (k, A, first, pivot-1);
+		else if (k == (pivot - first + 1) )
+			return A[pivot]; // base case
+		else
+			return k_small_lomuto (k - (pivot - first + 1), A, pivot+1, last);
+	}
+
+	// This function uses Hoare's partition scheme
+	// Assumption: k always valid such that 1 <= k <= length of array
+	template <typename type_t> type_t k_small_hoare (int k, std::vector<type_t>& A, int first, int last)
+	{
+		if (first >= last)
+			return A[first]; // base case
+
+		// select pivot index based on Hoare's partition scheme
+		int pivot = h_partition(A, first, last);
+
+		if (k <= (pivot - first + 1) )
+			return k_small_hoare (k, A, first, pivot);
+		else
+			return k_small_hoare (k - (pivot - first + 1), A, pivot+1, last );
+	}
+
+	// This function returns the K-TH smallest value in the given array
+	template <typename type_t> type_t k_smallest (int k, std::vector<type_t>& __array, int first, int last, PARTITION p)
+	{
+		switch (p)
+		{
+			case HOARE:
+			{
+				return k_small_hoare (k, __array, first, last);
+				break;
+			}
+
+			case LOMUTO:
+			{
+				return k_small_lomuto (k, __array, first, last);
+				break;
+			}
+
+			default:
+			{
+				break;
+			}
+		}
+	}
+
+	// This function returns the K-TH largest value in the given array
+	template <typename type_t> type_t k_largest (std::vector<type_t>& __array, int k, PARTITION p) // LEETCODE
+	{
+		// local data
+		int size = __array.size();
+
+		// Actually, K-TH largest means (SIZE-K)-TH smallest, then the problem turns finding (SIZE-K) smallest value in the given array
+		return k_smallest ( (size-k + 1), __array, 0, size-1, p);
 	}
 
 	// This function finds the number of maximum occurrences amongst elements of the given list
