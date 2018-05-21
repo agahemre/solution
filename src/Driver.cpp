@@ -34,6 +34,22 @@ vector<int> construct_demo_vector()
 	return v1;
 }
 
+vector<char> construct_character_vector()
+{
+	vector<char> vc;
+	vc.push_back('Z');
+	vc.push_back('H');
+	vc.push_back('G');
+	vc.push_back('F');
+	vc.push_back('E');
+	vc.push_back('D');
+	vc.push_back('C');
+	vc.push_back('B');
+	vc.push_back('A');
+
+	return vc;
+}
+
 vector<int> construct_demo_vector_custom_sort()
 {
 	vector<int> v1;
@@ -90,11 +106,13 @@ int main()
 	vector<int> v = construct_demo_vector();
 	vector<int> c_sort = construct_demo_vector_custom_sort();
 	vector<const char *> v2 = construct_demo_vector_v2();
+	vector<char> vc = construct_character_vector();
 	int sze = v.size();
+	int c_sze = vc.size();
 	const int target = 37;
 	const int sum = 45;
 	const int rotation = 102;
-	int k = 14;
+	int k = 6;
 	int new_k = sze-k+1;
 	char word[] = "1234567890"; // sample
 	string s("anilella");
@@ -106,6 +124,11 @@ int main()
 	string b("abc");
 	//string b("def");
 	string w("keyhbmeknckfavrpqyyfjxjjmivtsftikovkcdcwefctqrqjryhtlcvstm");
+
+	printf ("The k-th (%d) smallest value -> %c\n", 8, solution::k_smallest(8, vc, 0, c_sze-1, HOARE) );
+	printf ("The k-th (%d) smallest value -> %c\n", 8, solution::k_smallest(8, vc, 0, c_sze-1, LOMUTO) );
+	printf ("The k-th (%d) largest value -> %c\n", 2, solution::k_largest(vc, 2, HOARE) );
+	printf ("The k-th (%d) largest value -> %c\n", 2, solution::k_largest(vc, 2, LOMUTO) );
 
 	// debug purpose
 	printf ("The target -> %d, and its index -> %d\n", target, solution::search(v, 0, sze-1, target));
@@ -119,15 +142,16 @@ int main()
 
 	for (auto const& e : v) printf ("%d\t", e);
 	printf("\n");
-
 	printf ("Reverse of array, and apply left rotate %d times:\n", rotation);
 	solution::reverse (v, 0, v.size()-1);
 	solution::rotate (v, rotation, CCW);
 
 	for (auto const& e : v) printf ("%d\t", e);
 	printf("\n");
-	printf ("The k-th (%d) smallest value -> %d\n", k, solution::k_small(k, v, 0, sze-1) );
-	printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k) );
+	printf ("The k-th (%d) smallest value -> %d\n", k, solution::k_smallest(k, v, 0, sze-1, HOARE) );
+	printf ("The k-th (%d) smallest value -> %d\n", k, solution::k_smallest(k, v, 0, sze-1, LOMUTO) );
+	printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k, HOARE) );
+	printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k, LOMUTO) );
 	printf ("The number of maximum occurrences amongst number[s] -> %d\n", solution::find_max_occur(c_sort) );
 	printf ("The number of maximum occurrences amongst word[s] -> %d\n", solution::find_max_occur(v2) );
 	solution::print_pair_sum(v, sum);
