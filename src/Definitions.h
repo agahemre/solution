@@ -38,6 +38,9 @@ struct Node
 // this enumeration defines a rotation direction
 typedef enum {CCW=1, CW=0} DIRECTION;
 
+// this enumeration defines a partition scheme
+typedef enum {HOARE, LOMUTO} PARTITION;
+
 const int SUCCESS = 8;
 const int NOT_FOUND = -1;
 
