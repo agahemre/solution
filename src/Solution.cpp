@@ -848,6 +848,27 @@ namespace solution
 		return (right || left);
 	}
 
+	// This function checks whether given two binary trees are the same or not
+	// @note: simple enough to bring a solution, right ?
+	bool is_same_tree (Node2 *p, Node2 *q)
+	{
+		// base case i) 'both p & q trees are empty or reached their leaf nodes at the same time'
+		if ( (p == NULL && q == NULL) )
+			return true;
+		// base case ii.i) 'inequality of I'
+		else if ( (p != NULL && q == NULL) )
+			return false;
+		// base case ii.ii) 'inequality of II'
+		else if ( (p == NULL && q != NULL) )
+			return false;
+		// base case iii) 'inequality on nodes' key'
+		else if ( (p->key != q->key) )
+			return false;
+		// recursive part
+		else
+			return ( is_same_tree (p->left, q->left) && is_same_tree (p->right, q->right) );
+	}
+
 	// This function returns the length of given linked list given as parameter in by using recursion
 	int length (Node* head)
 	{

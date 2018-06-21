@@ -68,6 +68,7 @@ namespace solution
 	Node2* predecessor (Node2 *, Node2 *);
 	Node2* lca (Node2 *, Node2 *, Node2 *); // LEETCODE
 	bool exist(Node2 *, int);
+	bool is_same_tree (Node2 *, Node2 *); // LEETCODE
 	int height (Node2 *);
 	int height_iterative (Node2 *);
 	int min_depth (Node2 *); // LEETCODE
@@ -258,6 +259,7 @@ namespace solution
 
 			default:
 			{
+				// do nothing
 				break;
 			}
 		}
