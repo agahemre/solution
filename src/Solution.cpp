@@ -13,6 +13,20 @@
 namespace solution
 {
 	/**
+	 * @description: Conway's game of life simulation
+	 *
+	 * i) Any live cell with fewer than two live neighbors dies, as if caused by under-population.
+	 * ii) Any live cell with two or three live neighbors lives on to the next generation.
+	 * iii) Any live cell with more than three live neighbors dies, as if by over-population
+	 * iv) Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+	 */
+
+	// This function computes the next state (after one update) of the board given its current state
+	void game_of_life(std::vector<std::vector<int>>& board) {
+
+		// TODO
+	}
+	/**
 	 * @description : INORDER TREE WALK can be explained as first visit the left node, then,
 	 * go through the its root node
 	 * then, goto right node
@@ -524,6 +538,12 @@ namespace solution
 			return search (root->right, key);
 		else	// seek LEFT subtree
 			return search (root->left, key);
+	}
+
+	// This function searches a key in an array sorted in ascending order and rotated at some pivot unknown beforehand
+	int search (std::vector<int>& A, int key)
+	{
+		// TODO
 	}
 
 	// This function searches the key provided as @parameter

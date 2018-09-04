@@ -18,6 +18,8 @@ namespace solution
 	void inorder_tree_walk (Node2 *);
 	void levelorder_tree_walk (Node2 *);
 	Node2* search (Node2 *, int);
+	Node* partition (Node*, int); // LEETCODE
+	int search (std::vector<int>&, int); // LEETCODE
 	Node2* iterative_tree_search (Node2 *, int);
 	Node2* iterative_randomized_tree_search (Node2 *, int);
 	Node2* construct_maximum_binary_tree(const std::vector<int>&); // LEETCODE
@@ -36,6 +38,7 @@ namespace solution
 	int is_palindrome (Node *);	// LEETCODE
 	int is_palindrome (std::string);
 	int has_valid_parentheses (std::string); // LEETCODE
+	void game_of_life (std::vector<std::vector<int>>&); // LEETCODE
 
 	/**
 	 * @description : following functions are helper functions for has_valid_parentheses function
