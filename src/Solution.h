@@ -303,6 +303,8 @@ namespace solution
         return max_occur;
     }
 
+    bool is_power_of_four (int); // LEETCODE
+    bool is_power_of_two (int); // LEETCODE
     void print_pair_sum (std::vector<int>&, int);
     void custom_sort (std::vector<int>&);
     int compare (std::string, std::string);

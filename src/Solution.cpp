@@ -12,6 +12,36 @@
 
 namespace solution
 {
+    // This function checks whether given @param n is a power of 4 or not
+    bool is_power_of_four (int n) {
+
+        // local data
+        const unsigned int two = 2;
+        long start = 1; // define long instead of integer to cover all LEETCODE test cases
+
+        while (start < n) {
+
+            // start <- start shift left by TWO
+            start = start << two;
+        }
+
+        return (start == n);
+    }
+    // This function checks whether given @param n is a power of 2 or not
+    bool is_power_of_two (int n) {
+
+        // local data
+        const unsigned int one = 1;
+        long start = 1; // define long instead of integer to cover all LEETCODE test cases
+
+        while (start < n) {
+
+            // start <- start shift left by ONE
+            start = start << one;
+        }
+
+        return (start == n);
+    }
     /**
      * @description: Conway's game of life simulation
      *
@@ -1390,15 +1420,15 @@ namespace solution
     int compare (std::string s1, std::string s2)
     {
         // base case null) both string inputs are nullptr character at the same time
-        if (s1.size() == 0 && s2.size() == 0)
+        if (s1.empty() && s2.empty())
             return 0;
 
         // base case null.i) first is null or reached null before second
-        if (s1.size() == 0)
+        if (s1.empty())
             return -1;
 
         // base case null.ii) second is null or reached null before first
-        if (s2.size() == 0)
+        if (s2.empty())
             return 1;
 
         // compare first characters, always
