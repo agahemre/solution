@@ -39,6 +39,7 @@ namespace solution
     int is_palindrome (std::string);
     int has_valid_parentheses (std::string); // LEETCODE
     void game_of_life (std::vector<std::vector<int>>&); // LEETCODE
+    int count_neighbours (std::vector<std::vector<int>>, const int, const int, const int, const int);
 
     /**
      * @description : following functions are helper functions for has_valid_parentheses function

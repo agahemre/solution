@@ -3,6 +3,7 @@
  *  @author: EA
  */
 
+#include "gof.h"
 #include "Solution.h"
 #include <stack>
 #include <queue>
@@ -42,6 +43,7 @@ namespace solution
 
         return (start == n);
     }
+
     /**
      * @description: Conway's game of life simulation
      *
@@ -51,11 +53,52 @@ namespace solution
      * iv) Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
      */
 
-    // This function computes the next state (after one update) of the board given its current state
+    // This function computes the next state (after one update) of the board given its current state (in place)
     void game_of_life(std::vector<std::vector<int>>& board) {
 
-        // TODO
+        // local data
+        const int sze = board.size();
+        const int c_sze = board[0].size();
+
+        for (int i = 0; i < sze; i++) {
+            for (int j = 0; j < c_sze; j++) {
+                int count = count_neighbours(board, i, j, sze, c_sze);
+                bool survive = ( (count == 2 || count == 3) && ((board[i][j] & 1) == 1));
+                bool reproduce = (count == 3) && (board[i][j] == 0);
+
+                if (survive || reproduce)
+                    board[i][j] = (board[i][j] & 1) + 2; // 00 => 10, 01 => 11
+            }
+        }
+
+        // next state
+        for (int i = 0; i < sze; i++) {
+            for (int j = 0; j < c_sze; j++) {
+                board[i][j] = board[i][j] >> 1; // 01 => 00, 10 => 01, 11 => 01
+            }
+        }
     }
+
+    // This function calculates the live neighbour `cell`s and returns this count
+    int count_neighbours(std::vector<std::vector<int>> board, const int I, const int J, const int sze, const int c_sze) {
+
+        // local data
+        int count = 0;
+
+        for (auto &dir : direction) {
+            int dX = dir[0] + I;
+            int dY = dir[1] + J;
+
+            // boundary check
+            if ( (dX >= 0 && dX < sze) && (dY >= 0 && dY < c_sze) ) {
+                if (board[dX][dY] & 1 == 1) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     /**
      * @description : INORDER TREE WALK can be explained as first visit the left node, then,
      * go through the its root node
