@@ -91,6 +91,13 @@ namespace solution
 
             // boundary check
             if ( (dX >= 0 && dX < sze) && (dY >= 0 && dY < c_sze) ) {
+                /**
+                 * @attention:
+                 *  Below condition refers the following criteria:
+                 *  If one of neighbours is live `cell` in the current state, then increment counter by one, 01 & 01 => 01
+                 *  If neighbour `cell` will be survived in the next state, then increment counter by one, 11 & 01 => 01
+                 *  If neighbour `cell` will be reproduced in the next state, then do not increment counter as 10 & 01 => 00
+                 */
                 if (board[dX][dY] & 1 == 1) {
                     count++;
                 }
