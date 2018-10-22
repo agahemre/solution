@@ -286,12 +286,12 @@ namespace solution
         int max_occur = 0;
         std::unordered_map<type_t, int> temp;
 
-        for (auto const& e : __array)
+        for (const auto &el : __array)
         {
-            if (temp.find(e) == temp.end()) // not contain
-                temp.insert(std::pair<type_t, int> (e, 1) );
+            if (temp.find(el) == temp.end()) // not contain
+                temp.insert(std::pair<type_t, int> (el, 1) );
             else // already contain
-                temp.find(e)->second = 1 + temp.find(e)->second; // simply increment the occurrence
+                temp.find(el)->second += 1;
         }
 
         // @note : maximum occurrence remains zero if empty list (array) passed before
@@ -311,6 +311,8 @@ namespace solution
     int compare (std::string, std::string);
     std::string merge_str (std::string, std::string);
     std::string merge_str (std::string, std::string, unsigned int);
+    std::string random_str(std::string::size_type);
+
 }
 
 #endif /* SOLUTION_H_ */

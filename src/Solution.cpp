@@ -5,6 +5,7 @@
 
 #include "gof.h"
 #include "Solution.h"
+#include <random>
 #include <stack>
 #include <queue>
 #include <map>
@@ -85,7 +86,7 @@ namespace solution
         // local data
         int count = 0;
 
-        for (auto &dir : direction) {
+        for (const auto &dir : direction) {
             int dX = dir[0] + I;
             int dY = dir[1] + J;
 
@@ -1430,10 +1431,10 @@ namespace solution
         /**
          * @note : the aim is to re-arrange the map not 'by key', 'by value'
          */
-        for (auto const &k : temp)
+        for (const auto &k : temp)
             temp_multi.insert(std::make_pair(k.second, k.first)); // Re-arrange the pairs
 
-        for (auto const &j : temp_multi)
+        for (const auto &j : temp_multi)
         {
             // Re-place the vector
             for (int a = 0; a < j.first; a++)
@@ -1524,5 +1525,23 @@ namespace solution
         // recursive part
         i+=2;
         return merge_str (a, b.substr(1), i);
+    }
+
+    // This function generates a random string
+    std::string random_str(std::string::size_type length) {
+
+        std::random_device seed;
+        thread_local static std::mt19937 rg{seed()};
+        thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(charset) - 2);
+
+        std::string s;
+
+        s.reserve(length);
+
+        while (length--) {
+            s += charset[pick(rg)];
+        }
+
+        return s;
     }
 }
