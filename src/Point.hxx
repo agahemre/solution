@@ -11,62 +11,70 @@ struct Point
     float y;
     Point() : x(0.0f), y(0.0f) {};
     Point(float x, float y) : x(x), y(y) {};
-
-    const Point& operator+=(const Point& o) {
-        this->x += o.x;
-        this->y += o.y;
-        return *this;
-    }
-
-    const Point& operator-=(const Point& o) {
-        this->x -= o.x;
-        this->y -= o.y;
-        return *this;
-    }
-
-    const Point& operator*=(const Point& o) {
-        this->x *= o.x;
-        this->y *= o.y;
-        return *this;
-    }
-
-    const Point& operator*=(int m) {
-        this->x *= m;
-        this->y *= m;
-        return *this;
-    }
-
-    const Point& operator+(const Point& o) {
-        float dX = this->x + o.x;
-        float dY = this->y + o.y;
-        return Point(dX, dY);
-    }
-
-    const Point& operator*(const Point& o) {
-        float dX = this->x * o.x;
-        float dY = this->y * o.y;
-        return Point(dX, dY);
-    }
-
-    const Point& inverse(float x, float y) {
-        this->x = y;
-        this->y = x;
-        return *this;
-    }
-
 };
 
-namespace point
-{
-    bool operator==(const Point& p2, const Point& p1) {
-        return (p2.x == p1.x) && (p2.y == p1.y);
+const unsigned int NEGATE_FACTOR = 1;
+
+namespace point2D {
+    bool operator==(const Point& left, const Point& right) {
+        return (left.x == right.x) && (left.y == right.y);
     }
 
-    bool operator!=(const Point& p2, const Point& p1) {
-        return (p2.x != p1.x) || (p2.y != p2.x);
+    bool operator!=(const Point& left, const Point& right) {
+        return (left.x != right.x) || (left.y != right.y);
     }
 
+    const Point& operator+=(Point& left, const Point& right) {
+        left.x += right.x;
+        left.y += right.y;
+        return left;
+    }
 
+    const Point& operator-=(Point& left, const Point& right) {
+        left.x -= right.x;
+        left.y -= right.y;
+        return left;
+    }
+
+    const Point& operator*=(Point& left, const Point& right) {
+        left.x *= right.x;
+        left.y *= right.y;
+        return left;
+    }
+
+    const Point& operator*=(Point& left, const float scalar) {
+        left.x *= scalar;
+        left.y *= scalar;
+        return left;
+    }
+
+    Point operator*(const float scalar, const Point& point) {
+        float dX = scalar * point.x;
+        float dY = scalar * point.y;
+        return Point(dX, dY);
+    }
+
+    Point operator+(const Point& left, const Point& right) {
+        float dX = left.x + right.y;
+        float dY = left.y + right.y;
+        return Point(dX, dY);
+    }
+
+    Point operator-(const Point& left, const Point& right) {
+        float dX = left.x - right.x;
+        float dY = left.y - right.y;
+        return Point(dX, dY);
+    }
+
+    Point operator-(const Point& right) {
+        float nX = NEGATE_FACTOR * right.x;
+        float nY = NEGATE_FACTOR * right.y;
+        return Point(nX, nY);
+    }
+
+    Point inverse(const float x, const float y) {
+        return Point(y, x);
+    }
 }
 
 
