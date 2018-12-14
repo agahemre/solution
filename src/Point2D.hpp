@@ -5,8 +5,6 @@
 #ifndef SOLUTION_POINT_HXX
 #define SOLUTION_POINT_HXX
 
-#include <utility>
-
 namespace emc {
 
     const float NEGATE_FACTOR = -1.0f;
@@ -17,14 +15,12 @@ namespace emc {
 
         Point2D() : x(0.0f), y(0.0f) {};
         Point2D(float x, float y) : x(x), y(y) {};
-        Point2D(const Point2D& other) = delete;
-        Point2D(Point2D&& other) : x(std::move(other.x)), y(std::move(other.y)) {};
+        Point2D(const Point2D& other) : x(other.x), y(other.y) {};
 
-        Point2D& operator=(const Point2D& other) = delete;
-        Point2D& operator=(Point2D&& other) {
+        Point2D& operator=(const Point2D& other) {
             if (&other != this) {
-                this->x = std::move(other.x);
-                this->y = std::move(other.y);
+                this->x = other.x;
+                this->y = other.y;
             }
             return *this;
         }
@@ -36,6 +32,10 @@ namespace emc {
         void negate() {
             this->x *= NEGATE_FACTOR;
             this->y *= NEGATE_FACTOR;
+        }
+        void update(float x, float y) {
+            this->x = x;
+            this->y = y;
         }
     };
 
@@ -83,7 +83,7 @@ namespace emc {
         return left;
     }
 
-    Point2D operator-(const Point2D&& right) {
+    Point2D operator-(const Point2D& right) {
         float nX = NEGATE_FACTOR * right.x;
         float nY = NEGATE_FACTOR * right.y;
         return Point2D(nX, nY);
@@ -101,7 +101,7 @@ namespace emc {
         return left;
     }
 
-    Point2D operator~(const Point2D&& right) {
+    Point2D operator~(const Point2D& right) {
         return Point2D(right.y, right.x);
     }
 }

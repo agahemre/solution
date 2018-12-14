@@ -8,5 +8,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -Wall")
 # set(COMPILE_FLAGS -Wall -Wextra)
 
-set(SOURCE_FILES src/Definitions.h src/Solution.h src/Solution.cpp src/Driver.cpp src/gof.h src/Point2D.hpp src/Point.cxx)
+set(SOURCE_FILES src/Definitions.h src/Solution.h src/Solution.cpp src/Driver.cpp src/gof.h src/Point2D.hpp src/Point.cxx src/Tile2D.hpp src/Definitions.hpp src/Ball.hpp src/Ball.cpp)
 add_executable(solution ${SOURCE_FILES})
