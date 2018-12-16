@@ -1,20 +1,22 @@
-//
-// Created by eagah on 12/11/2018.
-//
+/**
+ * @author: summer
+ */
+
+#pragma once
 
 #ifndef SOLUTION_POINT_HXX
 #define SOLUTION_POINT_HXX
 
-namespace emc {
+#include "Definitions.hpp"
 
-    const float NEGATE_FACTOR = -1.0f;
+namespace emc {
 
     struct Point2D {
         float x;
         float y;
 
-        Point2D() : x(0.0f), y(0.0f) {};
-        Point2D(float x, float y) : x(x), y(y) {};
+        explicit Point2D() : x(0.0f), y(0.0f) {};
+        explicit Point2D(float x, float y) : x(x), y(y) {};
         Point2D(const Point2D& other) : x(other.x), y(other.y) {};
 
         Point2D& operator=(const Point2D& other) {
@@ -30,8 +32,8 @@ namespace emc {
             this->y = 0.0f;
         };
         void negate() {
-            this->x *= NEGATE_FACTOR;
-            this->y *= NEGATE_FACTOR;
+            this->x *= utility::NEGATE_FACTOR;
+            this->y *= utility::NEGATE_FACTOR;
         }
         void update(float x, float y) {
             this->x = x;
@@ -44,7 +46,7 @@ namespace emc {
     }
 
     bool operator!=(const Point2D& left, const Point2D& right) {
-        return (left.x != right.x) || (left.y != right.y);
+        return !(left == right);
     }
 
     Point2D operator*(const Point2D& left, float right) {
@@ -84,8 +86,8 @@ namespace emc {
     }
 
     Point2D operator-(const Point2D& right) {
-        float nX = NEGATE_FACTOR * right.x;
-        float nY = NEGATE_FACTOR * right.y;
+        float nX = utility::NEGATE_FACTOR * right.x;
+        float nY = utility::NEGATE_FACTOR * right.y;
         return Point2D(nX, nY);
     }
 
