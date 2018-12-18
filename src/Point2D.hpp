@@ -15,95 +15,86 @@ namespace emc {
         float x;
         float y;
 
-        explicit Point2D() : x(0.0f), y(0.0f) {};
-        explicit Point2D(float x, float y) : x(x), y(y) {};
+        Point2D() : x(0.0f), y(0.0f) {};
+        Point2D(float x, float y) : x(x), y(y) {};
         Point2D(const Point2D& other) : x(other.x), y(other.y) {};
 
-        Point2D& operator=(const Point2D& other) {
-            if (&other != this) {
-                this->x = other.x;
-                this->y = other.y;
+        Point2D& operator=(const Point2D& right) {
+            if (&right != this) {
+                this->x = right.x;
+                this->y = right.y;
             }
             return *this;
         }
 
-        void reset() {
-            this->x = 0.0f;
-            this->y = 0.0f;
-        };
-        void negate() {
-            this->x *= utility::NEGATE_FACTOR;
-            this->y *= utility::NEGATE_FACTOR;
-        }
-        void update(float x, float y) {
-            this->x = x;
-            this->y = y;
-        }
+        void reset();
+        void negate();
+        void update(float, float);
     };
 
-    bool operator==(const Point2D& left, const Point2D& right) {
+    inline bool operator==(const Point2D& left, const Point2D& right) {
         return (left.x == right.x) && (left.y == right.y);
     }
 
-    bool operator!=(const Point2D& left, const Point2D& right) {
-        return !(left == right);
+    inline Point2D operator*(const Point2D& left, float right) {
+        return Point2D((left.x * right), (left.y * right));
     }
 
-    Point2D operator*(const Point2D& left, float right) {
-        float dX = left.x * right;
-        float dY = left.y * right;
-        return Point2D(dX, dY);
+    inline Point2D operator*(float left, const Point2D& right) {
+        return Point2D((right.x * left), (right.y * left));
     }
 
-    Point2D operator*(float left, const Point2D& right) {
-        float dX = left * right.x;
-        float dY = left * right.y;
-        return Point2D(dX, dY);
-    }
-
-    Point2D& operator*=(Point2D& left, const Point2D& right) {
+    inline Point2D& operator*=(Point2D& left, const Point2D& right) {
         left.x *= right.x;
         left.y *= right.y;
         return left;
     }
 
-    Point2D& operator*=(Point2D& left, float right) {
+    inline Point2D& operator*=(Point2D& left, float right) {
         left.x *= right;
         left.y *= right;
         return left;
     }
 
-    Point2D operator+(const Point2D& left, const Point2D& right) {
-        float dX = left.x + right.y;
-        float dY = left.y + right.y;
-        return Point2D(dX, dY);
+    inline Point2D operator+(const Point2D& left, const Point2D& right) {
+        return Point2D((left.x + right.x), (left.y + right.y));
     }
 
-    Point2D& operator+=(Point2D& left, const Point2D& right) {
+    inline Point2D& operator+=(Point2D& left, const Point2D& right) {
         left.x += right.x;
         left.y += right.y;
         return left;
     }
 
-    Point2D operator-(const Point2D& right) {
-        float nX = utility::NEGATE_FACTOR * right.x;
-        float nY = utility::NEGATE_FACTOR * right.y;
-        return Point2D(nX, nY);
+    inline Point2D operator-(const Point2D& right) {
+        return Point2D(-right.x, -right.y);
     }
 
-    Point2D operator-(const Point2D& left, const Point2D& right) {
-        float dX = left.x - right.x;
-        float dY = left.y - right.y;
-        return Point2D(dX, dY);
-    }
-
-    Point2D& operator-=(Point2D& left, const Point2D& right) {
+    inline Point2D& operator-=(Point2D& left, const Point2D& right) {
         left.x -= right.x;
         left.y -= right.y;
         return left;
     }
 
-    Point2D operator~(const Point2D& right) {
+    inline Point2D operator/(const Point2D& left, float right) {
+        return Point2D((left.x / right), (left.y / right));
+    }
+
+    inline Point2D operator/=(Point2D& left, const Point2D& right) {
+        left.x /= right.x;
+        left.y /= right.y;
+        return left;
+    }
+
+    inline Point2D operator-(const Point2D& left, const Point2D& right) {
+        return Point2D((left.x - right.x), (left.y - right.y));
+    }
+
+    inline bool operator!=(const Point2D& left, const Point2D& right) {
+        return (left.x != right.x) || (left.y != right.y);
+    }
+
+    inline Point2D operator~(const Point2D& right) {
         return Point2D(right.y, right.x);
     }
 }

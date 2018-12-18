@@ -1,19 +1,19 @@
-//
-// Created by eagah on 12/14/2018.
-//
+/*
+ * @author: summer
+ */
 
 #include "Ball.hpp"
 
 void Ball::resetPosition() {
-    this->position.reset();
+    position.reset();
 }
 
 void Ball::updatePosition(float x, float y) {
-    this->position.update(x, y);
+    position.update(x, y);
 }
 
 void Ball::updatePosition(const emc::Point2D& point2D) {
-    this->position = point2D;
+    position = point2D;
 }
 
 void Ball::negatePosition(emc::Point2D& point2D) {
@@ -21,7 +21,7 @@ void Ball::negatePosition(emc::Point2D& point2D) {
 }
 
 emc::Point2D Ball::negatePosition() {
-    return -this->position;
+    return -position;
 }
 
 void Ball::mirrorVelocity() {
@@ -36,11 +36,11 @@ void Ball::mirrorVelocity() {
 }
 
 bool Ball::isXPositionOnBorder() {
-    return (this->position.x <= utility::LEFT_BOUND_X) || (this->position.x >= utility::RIGHT_BOUND_X);
+    return (position.x <= utility::LEFT_BOUND_X) || (position.x >= utility::RIGHT_BOUND_X);
 }
 
 bool Ball::isYPositionOnBorder() {
-    return (this->position.y <= utility::LOWER_BOUND_Y) || (this->position.y >= utility::UPPER_BOUND_Y);
+    return (position.y <= utility::LOWER_BOUND_Y) || (position.y >= utility::UPPER_BOUND_Y);
 }
 
 

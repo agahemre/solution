@@ -1,6 +1,6 @@
-//
-// Created by eagah on 12/13/2018.
-//
+/**
+ * @author: summer
+ */
 
 #ifndef SOLUTION_BALL_HPP
 #define SOLUTION_BALL_HPP
@@ -9,10 +9,6 @@
 
 struct Ball {
     emc::Point2D position;
-
-    Ball() {
-        this->position = emc::Point2D();
-    };
 
     void updatePosition(float, float);
     void updatePosition(const emc::Point2D&);
