@@ -1528,20 +1528,14 @@ namespace solution
     }
 
     // This function generates a random string
-    std::string random_str(std::string::size_type length) {
+    void random_str (std::string& result, size_t length) {
 
         std::random_device seed;
         thread_local static std::mt19937 rg{seed()};
         thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(charset) - 2);
 
-        std::string s;
-
-        s.reserve(length);
-
         while (length--) {
-            s += charset[pick(rg)];
+            result += charset[pick(rg)];
         }
-
-        return s;
     }
 }

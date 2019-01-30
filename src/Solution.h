@@ -247,25 +247,12 @@ namespace solution
     // This function returns the K-TH smallest value in the given array
     template <typename type_t> type_t k_smallest (int k, std::vector<type_t>& __array, int first, int last, PARTITION p)
     {
-        switch (p)
-        {
-            case HOARE:
-            {
-                return k_small_hoare (k, __array, first, last);
-                break;
-            }
+        if (HOARE == p) {
+            return k_small_hoare (k, __array, first, last);
+        }
 
-            case LOMUTO:
-            {
-                return k_small_lomuto (k, __array, first, last);
-                break;
-            }
-
-            default:
-            {
-                // do nothing
-                break;
-            }
+        if (LOMUTO == p) {
+            return k_small_lomuto (k, __array, first, last);
         }
     }
 
@@ -311,7 +298,7 @@ namespace solution
     int compare (std::string, std::string);
     std::string merge_str (std::string, std::string);
     std::string merge_str (std::string, std::string, unsigned int);
-    std::string random_str(std::string::size_type);
+    void random_str (std::string&, size_t length = 8);
 
 }
 
