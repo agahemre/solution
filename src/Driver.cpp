@@ -124,6 +124,14 @@ int main()
     string b("abc");
     //string b("def");
     string w("keyhbmeknckfavrpqyyfjxjjmivtsftikovkcdcwefctqrqjryhtlcvstm");
+    const int days = 3;
+    vector<int> Cells = {1, 0, 0, 0, 0, 1, 0, 0};
+    for (auto const& cell : Cells) printf("%d\t", cell);
+    printf("\n");
+    printf("Call amazing automata after %d days:\n", days);
+    solution::amazingAutomata(Cells, days);
+    for (auto const& cell : Cells) printf("%d\t", cell);
+    printf("\n");
 
     printf ("The k-th (%d) smallest value -> %c\n", 8, solution::k_smallest(8, vc, 0, c_sze-1, HOARE) );
     printf ("The k-th (%d) smallest value -> %c\n", 8, solution::k_smallest(8, vc, 0, c_sze-1, LOMUTO) );

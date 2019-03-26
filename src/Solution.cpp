@@ -45,6 +45,48 @@ namespace solution
         return (start == n);
     }
 
+    // This function computes the next state (after number of days given as parameter) of the Cell given its current state (in place)
+    void amazingAutomata(std::vector<int>& Cell, int day)  {
+        int currDay = 1;
+
+        do {
+            amazingAutomataHelper(Cell);
+            currDay = currDay + 1;
+        } while (currDay <= day);
+    }
+
+    // This function computes the next state (after one day - iteration, only) of the Cell given its current state (in place)
+    void amazingAutomataHelper(std::vector<int>& Cell) {
+        const int seven = 7;
+        const int sze = Cell.size();
+
+        for (int curr = 0; curr < sze; curr++) {
+            int countNeighbour = checkEdgeCell(curr, seven);
+            int prev = curr - 1, next = curr + 1;
+
+            bool inactive = ((countNeighbour == 2) && ((Cell[prev] & 1) == (Cell[next] & 1))) ||
+                            ((countNeighbour == 0) && ((Cell[next] & 1) == 0)) ||
+                            ((countNeighbour == 7) && ((Cell[prev] & 1) == 0));
+
+            if (!inactive) {
+                Cell[curr] += 2; // 00 => 01, cell becomes active next state, 01 => 11, cell preserves its active state
+            }
+            // No else, 01 => 01, cell becomes inactive next state, 00 => 00, cell preserves its inactive state
+        }
+
+        // next state
+        for (int j = 0; j < sze; j++) {
+            Cell[j] = Cell[j] >> 1; // 10 => 01, 11 => 01, 01 => 00, 00 => 00
+        }
+    }
+
+    // This function returns two adjacent cell number if current cell is not edge cell, otherwise returns current index, directly
+    int checkEdgeCell(int curr, int edge) {
+
+        if (curr < edge && curr > 0) return 2;
+        return curr;
+    }
+
     /**
      * @description: Conway's game of life simulation
      *
@@ -99,7 +141,7 @@ namespace solution
                  *  If neighbour `cell` will be survived in the next state, then increment counter by one, 11 & 01 => 01
                  *  If neighbour `cell` will be reproduced in the next state, then do not increment counter as 10 & 01 => 00
                  */
-                if (board[dX][dY] & 1 == 1) {
+                if ( (board[dX][dY] & 1) == 1) {
                     count++;
                 }
             }
