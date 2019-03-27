@@ -45,6 +45,19 @@ namespace solution
         return (start == n);
     }
 
+    /**
+     * @description: There is a colony of eight cells arranged in a straight line where each day every cell competes
+     * with its adjacent cell, neighbour. Each day, for each cell, if its neighbours on both side are both active or both inactive,
+     * the current cell becomes inactive the next day, otherwise, it becomes active the next day.
+     *
+     *  Assumptions: For the edge cells that have a single adjacent cell (one neighbour), one other adjacent cell can be assumed
+     *  to be always inactive, even after updating the current cell, and/or next day.
+     *
+     *  @attention: Consider previous state for updating the state of other cells, in other words,
+     *  updating the cell state information of all cells simultaneously.
+     *  @param: Cell: list
+     *  @param: day: number of iteration
+     */
     // This function computes the next state (after number of days given as parameter) of the Cell given its current state (in place)
     void amazingAutomata(std::vector<int>& Cell, int day)  {
         int currDay = 1;
