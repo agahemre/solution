@@ -74,38 +74,11 @@ vector<int> construct_demo_vector_custom_sort()
     return v1;
 }
 
-vector<const char *> construct_demo_vector_v2()
-{
-    vector<const char *> v1;
-    v1.push_back("canan");
-    v1.push_back("emrecan");
-    v1.push_back("emrecan");
-    v1.push_back("emma");
-    v1.push_back("canan");
-    v1.push_back("canan");
-    v1.push_back("burcu");
-    v1.push_back("canan");
-    v1.push_back("emrecan");
-    v1.push_back("cem");
-    v1.push_back("emrecan");
-    v1.push_back("eren");
-    v1.push_back("aysen");
-    v1.push_back("canan");
-    v1.push_back("canan");
-    v1.push_back("emrecan");
-    v1.push_back("cem");
-    v1.push_back("canan");
-    v1.push_back("emrecan");
-    v1.push_back("anil");
-
-    return v1;
-}
-
 int main()
 {
     vector<int> v = construct_demo_vector();
     vector<int> c_sort = construct_demo_vector_custom_sort();
-    vector<const char *> v2 = construct_demo_vector_v2();
+    // vector<const char *> v2 = construct_demo_vector_v2();
     vector<char> vc = construct_character_vector();
     int sze = v.size();
     int c_sze = vc.size();
@@ -161,7 +134,7 @@ int main()
     printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k, HOARE) );
     printf ("The k-th (%d) largest value -> %d\n", new_k, solution::k_largest(v, new_k, LOMUTO) );
     printf ("The number of maximum occurrences amongst number[s] -> %d\n", solution::find_max_occur(c_sort) );
-    printf ("The number of maximum occurrences amongst word[s] -> %d\n", solution::find_max_occur(v2) );
+    // printf ("The number of maximum occurrences amongst word[s] -> %d\n", solution::find_max_occur(v2) );
     solution::print_pair_sum(v, sum);
     printf ("Prints characters in reverse order -> "); solution::print_r (word);
     printf ("\n");
